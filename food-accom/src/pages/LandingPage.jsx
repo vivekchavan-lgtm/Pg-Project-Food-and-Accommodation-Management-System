@@ -35,7 +35,7 @@ return (
 
         {/* Right side buttons */}
         <div style={{ display: 'flex', gap: '16px' }}>
-        <button className="btn-primary" onClick={() => nav('/signup')}>
+        <button className="btn-primary" onClick={() => nav('/register')}>
             Register
         </button>
         <button className="btn-primary" onClick={() => nav('/login')}>
