@@ -13,7 +13,7 @@ export default function NotificationsBell() {
 
   useEffect(() => {
     load()
-    // simple polling to refresh notifications every 3s while open (or always)
+    
     const t = setInterval(load, 3000)
     return () => clearInterval(t)
     // eslint-disable-next-line react-hooks/exhaustive-deps

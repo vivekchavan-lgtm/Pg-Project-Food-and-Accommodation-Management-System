@@ -1,38 +1,33 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContext'
+import { useState } from "react";
+import axios from "axios";
+import { useAuth } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-export default function Login(){
-  const [username, setUsername] = useState('')
-  const [role, setRole] = useState('user')
-  const { login } = useAuth()
-  const nav = useNavigate()
+export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    login({ username, role })
-    if(role === 'admin') nav('/admin')
-    else nav('/')
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const res = await axios.post("http://localhost:8080/api/auth/login", {
+      email,
+      password,
+    });
+
+    login(res.data);
+
+    if (res.data.role === "ADMIN") navigate("/admin");
+    else if (res.data.role === "OWNER") navigate("/owner");
+    else navigate("/home");
+  };
 
   return (
-    <div className="container" style={{paddingTop:24}}>
-      <div className="card form">
-        <h2 style={{marginBottom:12}}>Sign In</h2>
-        <form onSubmit={handleSubmit}>
-          <label className="small">Username</label>
-          <input className="input" value={username} onChange={e=>setUsername(e.target.value)} placeholder="vishwa" />
-
-          <label className="small">Role</label>
-          <select className="select" value={role} onChange={e=>setRole(e.target.value)}>
-            <option value="user">User</option>
-             <option value="owner">Owner</option> 
-            <option value="admin">Admin</option>
-          </select>
-
-          <button className="btn-primary" type="submit">Sign in</button>
-        </form>
-      </div>
-    </div>
-  )
+    <form onSubmit={handleSubmit}>
+      <input value={email} onChange={e => setEmail(e.target.value)} />
+      <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
+      <button>Login</button>
+    </form>
+  );
 }

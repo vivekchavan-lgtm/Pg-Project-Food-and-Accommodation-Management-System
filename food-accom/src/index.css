@@ -83,5 +83,23 @@ html, body, #root { height: 100%; margin: 0; font-family: Inter, Arial, sans-ser
   font-weight:600;
 }
 
+/* in index.css */
+.btn-primary {
+  background-color: #ff5200;
+  color: white;
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: #ff5200;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 /* Small helpers */
 .small { font-size:13px; color:#6b7280; }

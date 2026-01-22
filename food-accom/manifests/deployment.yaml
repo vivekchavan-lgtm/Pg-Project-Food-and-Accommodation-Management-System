@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-app-deployment
+  labels:
+    app: react-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: react-app
+  template:            # This is the Pod template
+    metadata:
+      labels:
+        app: react-app
+    spec:              # This spec defines the Pod's behavior
+      containers:      # <--- This must be inside template.spec
+      - name: react-container
+        image: docker-demo:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000

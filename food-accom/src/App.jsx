@@ -1,97 +1,82 @@
-// src/App.jsx
-import React from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 
-import Login from './pages/Login'
-import UserHome from './pages/UserHome'
-import AdminDashboard from './pages/AdminDashboard'
-import OwnerDashboard from './pages/OwnerDashboard'
-import Navbar from './components/Navbar'
+import Navbar from "./components/Navbar";
+import LandingPage from "./pages/LandingPage";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import UserHome from "./pages/UserHome";
+import OwnerDashboard from "./pages/OwnerDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
 
-import { useAuth } from './contexts/AuthContext'
+import { useAuth } from "./contexts/AuthContext";
 
-
-// Protected Route (for users)
-
+// ---------------- Protected Route ----------------
 const ProtectedRoute = ({ children }) => {
-  const { user } = useAuth()
-  if (!user) return <Navigate to="/login" replace />
-  return children
-}
+  const { user } = useAuth();
+  if (!user) return <Navigate to="/login" replace />;
+  return children;
+};
 
-// Admin Route (only admin role)
-
+// ---------------- Admin Route ----------------
 const AdminRoute = ({ children }) => {
-  const { user } = useAuth()
-  if (!user) return <Navigate to="/login" replace />
-  if (user.role !== 'admin') return <Navigate to="/" replace />
-  return children
-}
+  const { user } = useAuth();
+  if (!user) return <Navigate to="/login" replace />;
+  if (user.role !== "ADMIN") return <Navigate to="/" replace />;
+  return children;
+};
 
-// ------------------------------
-// Owner Route (only owner role)
-// ------------------------------
+// ---------------- Owner Route ----------------
 const OwnerRoute = ({ children }) => {
-  const { user } = useAuth()
-  if (!user) return <Navigate to="/login" replace />
-  if (user.role !== 'owner') return <Navigate to="/" replace />
-  return children
-}
+  const { user } = useAuth();
+  if (!user) return <Navigate to="/login" replace />;
+  if (user.role !== "OWNER") return <Navigate to="/" replace />;
+  return children;
+};
 
-// ------------------------------
-// DashboardRouter
-// Redirects "/" to the correct dashboard based on role
-// ------------------------------
-const DashboardRouter = () => {
-  const { user } = useAuth()
-  if (!user) return <Navigate to="/login" replace />
-  if (user.role === 'admin') return <Navigate to="/admin" replace />
-  if (user.role === 'owner') return <Navigate to="/owner" replace />
-  return <UserHome />
-}
-
-// ------------------------------
-// Main Application
-// ------------------------------
 export default function App() {
   return (
-    <div style={{ minHeight: '100vh' }}>
+    <div style={{ minHeight: "100vh" }}>
       <Navbar />
 
-      <div className="container" style={{ paddingTop: 18 }}>
-        <Routes>
+      <Routes>
+        {/* Public */}
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-          {/* Login page */}
-          <Route path="/login" element={<Login />} />
+        {/* User */}
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <UserHome />
+            </ProtectedRoute>
+          }
+        />
 
-          {/* Root: redirect to correct dashboard */}
-          <Route path="/" element={<DashboardRouter />} />
+        {/* Owner */}
+        <Route
+          path="/owner"
+          element={
+            <OwnerRoute>
+              <OwnerDashboard />
+            </OwnerRoute>
+          }
+        />
 
-          {/* Admin dashboard */}
-          <Route
-            path="/admin"
-            element={
-              <AdminRoute>
-                <AdminDashboard />
-              </AdminRoute>
-            }
-          />
+        {/* Admin */}
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
+          }
+        />
 
-          {/* Owner dashboard */}
-          <Route
-            path="/owner"
-            element={
-              <OwnerRoute>
-                <OwnerDashboard />
-              </OwnerRoute>
-            }
-          />
-
-          {/* Unknown path → redirect to root (DashboardRouter will redirect further) */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-
-        </Routes>
-      </div>
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
     </div>
-  )
+  );
 }

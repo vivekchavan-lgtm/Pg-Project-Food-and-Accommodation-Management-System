@@ -1,39 +1,38 @@
-// src/components/Navbar.jsx
-import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContext'
-import NotificationsBell from './NotificationsBell'
+import { Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
-export default function Navbar(){
-  const { user, logout } = useAuth()
-  const nav = useNavigate()
-
-  const handleLogout = () => {
-    logout()
-    nav('/login')
-  }
+export default function Navbar() {
+  const { user, logout } = useAuth();
 
   return (
-    <nav className="navbar">
-      <div className="inner container">
-        <div style={{display:'flex', alignItems:'center', gap:12}}>
-          <Link to="/" className="brand">FoodAccom</Link>
-          {user?.role === 'owner' && <Link to="/owner" className="nav-links">Owner</Link>}
-          {user?.role === 'admin' && <Link to="/admin" className="nav-links">Admin</Link>}
-        </div>
+    <nav style={{ padding: "12px 20px", borderBottom: "1px solid #ddd" }}>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        
+        <Link to="/" style={{ fontWeight: "bold" }}>
+          Food & PG Finder
+        </Link>
 
         <div>
-          {user ? (
-            <div className="user-info" style={{display:'flex', alignItems:'center', gap:12}}>
-              <NotificationsBell />
-              <span className="small">{user.username} ({user.role})</span>
-              <button onClick={handleLogout} className="btn-link">Logout</button>
-            </div>
+          {!user ? (
+            <>
+              <Link to="/login" style={{ marginRight: 12 }}>
+                Sign In
+              </Link>
+              <Link to="/register">
+                Register
+              </Link>
+            </>
           ) : (
-            <Link to="/login" className="nav-links">Login</Link>
+            <>
+              <span style={{ marginRight: 10 }}>
+                {user.email} ({user.role})
+              </span>
+              <button onClick={logout}>Logout</button>
+            </>
           )}
         </div>
+
       </div>
     </nav>
-  )
+  );
 }
