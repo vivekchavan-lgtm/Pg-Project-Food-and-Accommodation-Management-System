@@ -1,0 +1,87 @@
+/* src/index.css - plain CSS for the project */
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; margin: 0; font-family: Inter, Arial, sans-serif; background: #f5f7fb; color: #111; }
+
+/* Container */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* Navbar */
+.navbar {
+  background: #ffffff;
+  box-shadow: 0 1px 6px rgba(16,24,40,0.06);
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.navbar .inner {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:12px 16px;
+}
+.brand { font-weight:700; font-size:18px; text-decoration:none; color: #111; }
+.nav-links a { margin-left:12px; text-decoration:none; color:#374151; font-size:14px; }
+.user-info { display:flex; gap:12px; align-items:center; font-size:14px; color:#374151; }
+.btn-link { background:none; border:none; color:#2563eb; cursor:pointer; text-decoration:underline; padding:0; font-size:14px; }
+
+/* Card */
+.card {
+  background:#ffffff;
+  border-radius:8px;
+  padding:16px;
+  box-shadow: 0 4px 12px rgba(16,24,40,0.04);
+  border: 1px solid rgba(0,0,0,0.03);
+}
+
+/* Grid */
+.grid-2 {
+  display:grid;
+  gap:16px;
+  grid-template-columns: 1fr;
+}
+@media(min-width: 768px) {
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+}
+.grid-3 {
+  display:grid;
+  gap:16px;
+  grid-template-columns: 1fr;
+}
+@media(min-width: 900px) {
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Page headings */
+.page-title { font-size:28px; font-weight:700; margin:0 0 12px 0; }
+
+/* Form */
+.form {
+  max-width:420px;
+  margin:0 auto;
+}
+.input, .select {
+  width:100%;
+  padding:10px 12px;
+  border-radius:6px;
+  border:1px solid #d1d5db;
+  margin-bottom:12px;
+  font-size:14px;
+}
+.btn-primary {
+  display:inline-block;
+  width:100%;
+  padding:10px 12px;
+  background:#2563eb;
+  color:white;
+  border-radius:6px;
+  border:none;
+  cursor:pointer;
+  font-weight:600;
+}
+
+/* Small helpers */
+.small { font-size:13px; color:#6b7280; }
