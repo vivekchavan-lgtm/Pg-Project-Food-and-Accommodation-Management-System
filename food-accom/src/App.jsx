@@ -2,7 +2,9 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import LandingPage from "./pages/LandingPage";
+
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import UserHome from "./pages/UserHome";
@@ -36,8 +38,17 @@ const OwnerRoute = ({ children }) => {
 
 export default function App() {
   return (
-    <div style={{ minHeight: "100vh" }}>
-      <Navbar />
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+
+      
+
+      
 
       <Routes>
         {/* Public */}
@@ -78,5 +89,7 @@ export default function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
+
+    
   );
 }
