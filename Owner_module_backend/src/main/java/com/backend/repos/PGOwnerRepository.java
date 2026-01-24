@@ -1,0 +1,18 @@
+package com.backend.repos;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.backend.entity.PGOwner;
+
+import java.util.List;
+
+@Repository
+public interface PGOwnerRepository extends JpaRepository<PGOwner, Long> {
+
+    // Example: find PGs by type
+    List<PGOwner> findByPgType(Enum pgType);
+
+    // Example: find PGs with minimum rooms
+    List<PGOwner> findByTotalRoomsGreaterThan(int rooms);
+}
