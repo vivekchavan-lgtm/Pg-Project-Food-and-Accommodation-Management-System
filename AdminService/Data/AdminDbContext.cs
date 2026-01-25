@@ -1,0 +1,14 @@
+﻿
+using Microsoft.EntityFrameworkCore;
+using AdminService.Models;
+
+namespace AdminService.Data
+{
+    public class AdminDbContext : DbContext
+    {
+        public AdminDbContext(DbContextOptions<AdminDbContext> options)
+            : base(options) { }
+
+        public DbSet<AdminUser> AdminUsers { get; set; }
+    }
+}
