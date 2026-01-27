@@ -16,17 +16,29 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false, length = 120)
+    @Column(nullable = false, length = 50)
+    private String firstName;
+
+    @Column(nullable = false, length = 50)
+    private String lastName;
+
+    @Column(nullable = false, unique = true, length = 15)
+    private String mobile;
+
+    @Column(nullable = false, unique = true, length = 120)
     private String email;
 
     @Column(nullable = false)
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private Role role;
+    @Column(length = 50)
+    private String city;
 
-    // If this user is an OWNER, this will be non-null
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 10)
+    private Gender gender;
+
+    // One-to-One mapping as earlier
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Owner owner;
 }
