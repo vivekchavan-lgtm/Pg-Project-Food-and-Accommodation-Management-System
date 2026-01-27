@@ -4,11 +4,16 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import LandingPage from "./pages/LandingPage";
+import PGLayout from "./components/pgOwner/PGLayout";
+
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import UserHome from "./pages/UserHome";
 import OwnerDashboard from "./pages/OwnerDashboard";
+import PGDashboard from "./pages/pgOwner/PGDashboard";
+import PGProfile from "./pages/pgOwner/PGProfile";
+import RoomsPage from "./pages/pgOwner/RoomsPage";
 import AdminDashboard from "./pages/AdminDashboard";
 
 import { useAuth } from "./contexts/AuthContext";
@@ -31,6 +36,8 @@ const AdminRoute = ({ children }) => {
 // ---------------- Owner Route ----------------
 const OwnerRoute = ({ children }) => {
   const { user } = useAuth();
+    console.log("OwnerRoute user:", user);
+
   if (!user) return <Navigate to="/login" replace />;
   if (user.role !== "OWNER") return <Navigate to="/" replace />;
   return children;
@@ -75,6 +82,19 @@ export default function App() {
             </OwnerRoute>
           }
         />
+        {/* PG OWNER  */}
+<Route
+  path="/owner/pg"
+  element={
+    <OwnerRoute>
+      <PGLayout />
+    </OwnerRoute>
+  }
+>
+  <Route path="dashboard" element={<PGDashboard />} />
+  <Route path="profile" element={<PGProfile />} />
+  <Route path="rooms" element={<RoomsPage />} />
+</Route>
 
         {/* Admin */}
         <Route
@@ -85,6 +105,7 @@ export default function App() {
             </AdminRoute>
           }
         />
+
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

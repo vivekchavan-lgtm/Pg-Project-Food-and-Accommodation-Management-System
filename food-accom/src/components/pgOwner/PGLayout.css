@@ -1,0 +1,29 @@
+.pg-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.pg-sidebar {
+  width: 220px;
+  background: #1e293b;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.pg-sidebar a {
+  color: white;
+  text-decoration: none;
+  margin: 10px 0;
+}
+
+.pg-sidebar a.active {
+  font-weight: bold;
+}
+
+.pg-main {
+  flex: 1;
+  padding: 20px;
+  background: #f8fafc;
+}

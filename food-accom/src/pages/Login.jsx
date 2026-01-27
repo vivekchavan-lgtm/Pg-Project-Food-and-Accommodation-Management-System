@@ -17,11 +17,23 @@ export default function Login() {
     setLoading(true);
     try {
       const res = await loginUser({ email, password });
+     console.log("LOGIN RESPONSE:", res.data);
+
       login(res.data);
 
-      if (res.data.role === "ADMIN") navigate("/admin");
-      else if (res.data.role === "OWNER") navigate("/owner");
-      else navigate("/home");
+      if (res.data.role === "ADMIN") {
+  navigate("/admin");
+} else if (res.data.role === "OWNER") {
+  if (res.data.ownerType === "PG") {
+    navigate("/owner/pg/dashboard");
+  } else if (res.data.ownerType === "MESS") {
+    navigate("/owner/mess/dashboard");
+  } else {
+    navigate("/owner"); // fallback
+  }
+} else {
+  navigate("/home");
+}
     } catch {
       alert("Invalid credentials");
     } finally {
