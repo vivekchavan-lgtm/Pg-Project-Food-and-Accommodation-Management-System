@@ -1,0 +1,21 @@
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+
+spring:
+  application:
+    name: LoginService
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/login_db
+    username: D6-93137-Arshad
+    password: manager
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+jwt:
+  secret: mySecretKey1234567890123456789012
+  expiration: 3600000
