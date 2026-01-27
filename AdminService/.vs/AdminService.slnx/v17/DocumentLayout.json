@@ -1,0 +1,330 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|c:\\users\\chava\\onedrive\\desktop\\dac_project\\pg-project-food-and-accommodation-management-system\\adminservice\\entities\\owner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|solutionrelative:entities\\owner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|c:\\users\\chava\\onedrive\\desktop\\dac_project\\pg-project-food-and-accommodation-management-system\\adminservice\\service\\adminservice .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|solutionrelative:service\\adminservice .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Migrations\\20260127200453_AddOwnerTypeToOwners.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20260127200453_AddOwnerTypeToOwners.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Migrations\\20260127195238_AddEnabledColumnToUsers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20260127195238_AddEnabledColumnToUsers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|c:\\users\\chava\\onedrive\\desktop\\dac_project\\pg-project-food-and-accommodation-management-system\\adminservice\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|solutionrelative:entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Migrations\\20260127194045_AddEnabledToUsers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20260127194045_AddEnabledToUsers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|c:\\users\\chava\\onedrive\\desktop\\dac_project\\pg-project-food-and-accommodation-management-system\\adminservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|c:\\users\\chava\\onedrive\\desktop\\dac_project\\pg-project-food-and-accommodation-management-system\\adminservice\\controllers\\admincontoller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|solutionrelative:controllers\\admincontoller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|c:\\users\\chava\\onedrive\\desktop\\dac_project\\pg-project-food-and-accommodation-management-system\\adminservice\\service\\interface\\iadminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|solutionrelative:service\\interface\\iadminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|c:\\users\\chava\\onedrive\\desktop\\dac_project\\pg-project-food-and-accommodation-management-system\\adminservice\\dto\\adminstatsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|solutionrelative:dto\\adminstatsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|c:\\users\\chava\\onedrive\\desktop\\dac_project\\pg-project-food-and-accommodation-management-system\\adminservice\\data\\repositories\\iownerrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|solutionrelative:data\\repositories\\iownerrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|c:\\users\\chava\\onedrive\\desktop\\dac_project\\pg-project-food-and-accommodation-management-system\\adminservice\\data\\repositories\\iuserrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|solutionrelative:data\\repositories\\iuserrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|c:\\users\\chava\\onedrive\\desktop\\dac_project\\pg-project-food-and-accommodation-management-system\\adminservice\\data\\admindbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|solutionrelative:data\\admindbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|c:\\users\\chava\\onedrive\\desktop\\dac_project\\pg-project-food-and-accommodation-management-system\\adminservice\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|solutionrelative:properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|c:\\users\\chava\\onedrive\\desktop\\dac_project\\pg-project-food-and-accommodation-management-system\\adminservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|c:\\users\\chava\\onedrive\\desktop\\dac_project\\pg-project-food-and-accommodation-management-system\\adminservice\\adminservice.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|solutionrelative:adminservice.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|c:\\users\\chava\\onedrive\\desktop\\dac_project\\pg-project-food-and-accommodation-management-system\\adminservice\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|solutionrelative:appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|c:\\users\\chava\\onedrive\\desktop\\dac_project\\pg-project-food-and-accommodation-management-system\\adminservice\\adminservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{E3C9B33B-19B2-F8E2-A4E4-0066D340063E}|AdminService.csproj|solutionrelative:adminservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 100,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 11,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "20260127200453_AddOwnerTypeToOwners.cs",
+              "DocumentMoniker": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Migrations\\20260127200453_AddOwnerTypeToOwners.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260127200453_AddOwnerTypeToOwners.cs",
+              "ToolTip": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Migrations\\20260127200453_AddOwnerTypeToOwners.cs",
+              "RelativeToolTip": "Migrations\\20260127200453_AddOwnerTypeToOwners.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-27T20:04:53.822Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "20260127195238_AddEnabledColumnToUsers.cs",
+              "DocumentMoniker": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Migrations\\20260127195238_AddEnabledColumnToUsers.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260127195238_AddEnabledColumnToUsers.cs",
+              "ToolTip": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Migrations\\20260127195238_AddEnabledColumnToUsers.cs",
+              "RelativeToolTip": "Migrations\\20260127195238_AddEnabledColumnToUsers.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-27T19:52:38.767Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "20260127194045_AddEnabledToUsers.cs",
+              "DocumentMoniker": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Migrations\\20260127194045_AddEnabledToUsers.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260127194045_AddEnabledToUsers.cs",
+              "ToolTip": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Migrations\\20260127194045_AddEnabledToUsers.cs",
+              "RelativeToolTip": "Migrations\\20260127194045_AddEnabledToUsers.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-27T19:40:45.621Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "AdminStatsDto.cs",
+              "DocumentMoniker": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\DTO\\AdminStatsDto.cs",
+              "RelativeDocumentMoniker": "DTO\\AdminStatsDto.cs",
+              "ToolTip": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\DTO\\AdminStatsDto.cs",
+              "RelativeToolTip": "DTO\\AdminStatsDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-27T19:07:47.559Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "IOwnerRepo.cs",
+              "DocumentMoniker": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Data\\Repositories\\IOwnerRepo.cs",
+              "RelativeDocumentMoniker": "Data\\Repositories\\IOwnerRepo.cs",
+              "ToolTip": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Data\\Repositories\\IOwnerRepo.cs",
+              "RelativeToolTip": "Data\\Repositories\\IOwnerRepo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-27T17:52:40.926Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "IUserRepo.cs",
+              "DocumentMoniker": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Data\\Repositories\\IUserRepo.cs",
+              "RelativeDocumentMoniker": "Data\\Repositories\\IUserRepo.cs",
+              "ToolTip": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Data\\Repositories\\IUserRepo.cs",
+              "RelativeToolTip": "Data\\Repositories\\IUserRepo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-27T17:52:01.445Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AdminContoller.cs",
+              "DocumentMoniker": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Controllers\\AdminContoller.cs",
+              "RelativeDocumentMoniker": "Controllers\\AdminContoller.cs",
+              "ToolTip": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Controllers\\AdminContoller.cs",
+              "RelativeToolTip": "Controllers\\AdminContoller.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAIwDQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-27T06:26:05.233Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AdminService .cs",
+              "DocumentMoniker": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Service\\AdminService .cs",
+              "RelativeDocumentMoniker": "Service\\AdminService .cs",
+              "ToolTip": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Service\\AdminService .cs",
+              "RelativeToolTip": "Service\\AdminService .cs",
+              "ViewState": "AgIAAEkAAAAAAAAAAADwv1EAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-27T06:23:42.987Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "IAdminService.cs",
+              "DocumentMoniker": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Service\\Interface\\IAdminService.cs",
+              "RelativeDocumentMoniker": "Service\\Interface\\IAdminService.cs",
+              "ToolTip": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Service\\Interface\\IAdminService.cs",
+              "RelativeToolTip": "Service\\Interface\\IAdminService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-27T06:22:40.054Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "AdminDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Data\\AdminDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\AdminDbContext.cs",
+              "ToolTip": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Data\\AdminDbContext.cs",
+              "RelativeToolTip": "Data\\AdminDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-27T06:18:54.116Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Owner.cs",
+              "DocumentMoniker": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Entities\\Owner.cs",
+              "RelativeDocumentMoniker": "Entities\\Owner.cs",
+              "ToolTip": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Entities\\Owner.cs",
+              "RelativeToolTip": "Entities\\Owner.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-27T06:18:37.736Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "Entities\\User.cs",
+              "ToolTip": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Entities\\User.cs",
+              "RelativeToolTip": "Entities\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-27T06:18:28.972Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "AdminService.http",
+              "DocumentMoniker": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\AdminService.http",
+              "RelativeDocumentMoniker": "AdminService.http",
+              "ToolTip": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\AdminService.http",
+              "RelativeToolTip": "AdminService.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2026-01-27T06:11:51.004Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "appsettings.Development.json",
+              "ToolTip": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\appsettings.Development.json",
+              "RelativeToolTip": "appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-01-27T06:11:49.323Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-01-27T06:08:10.552Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "AdminService",
+              "DocumentMoniker": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\AdminService.csproj",
+              "RelativeDocumentMoniker": "AdminService.csproj",
+              "ToolTip": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\AdminService.csproj",
+              "RelativeToolTip": "AdminService.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-01-27T04:47:47.911Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAADAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-27T04:47:31.225Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-01-27T04:47:12.131Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

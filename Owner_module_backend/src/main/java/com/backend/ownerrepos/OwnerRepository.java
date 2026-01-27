@@ -17,4 +17,6 @@ public interface OwnerRepository extends JpaRepository<Owner, Long> {
 
     // Find owner by email (useful for login / validation)
     Owner findByEmail(String email);
+    
+
 }

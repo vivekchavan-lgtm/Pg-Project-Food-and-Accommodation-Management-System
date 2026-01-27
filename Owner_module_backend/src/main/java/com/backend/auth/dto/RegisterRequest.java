@@ -1,5 +1,6 @@
 package com.backend.auth.dto;
 
+import com.backend.userentity.Gender;
 import com.backend.userentity.Role;
 import com.backend.ownerentity.OwnerType;
 
@@ -11,13 +12,15 @@ import lombok.*;
 @AllArgsConstructor
 public class RegisterRequest {
 
+    private String firstName;
+    private String lastName;
+    private String mobile;
     private String email;
-
     private String password;
+    private String city;
+    private Gender gender;
 
-    private Role role;
-
-    // Only required when role == OWNER
-    private OwnerType ownerType;
+    private Role role;          // USER / OWNER
+    private OwnerType ownerType; // only if OWNER
 }
 

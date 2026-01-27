@@ -3,7 +3,6 @@ package com.backend.userentity;
 import com.backend.ownerentity.Owner;
 import jakarta.persistence.*;
 import lombok.*;
-
 @Entity
 @Table(name = "users")
 @Getter
@@ -38,7 +37,16 @@ public class User {
     @Column(nullable = false, length = 10)
     private Gender gender;
 
-    // One-to-One mapping as earlier
+    // 🔴 REQUIRED FOR SYSTEM
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 10)
+    private Role role;   // USER / OWNER / ADMIN
+
+    @Column(nullable = false)
+    private boolean enabled = true;
+    
+
+    // Owner link
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Owner owner;
 }

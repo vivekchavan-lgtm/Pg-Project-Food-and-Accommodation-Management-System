@@ -26,24 +26,42 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    // ---------------- REGISTER ----------------
+
     @Override
     public User registerUser(RegisterRequest request) {
 
-    	  if (request.getRole() == Role.ADMIN) {
-    	        throw new RuntimeException("Admin registration is not allowed");
-    	    }
+        // ❌ Block admin self registration
+        if (request.getRole() == Role.ADMIN) {
+            throw new RuntimeException("Admin registration is not allowed");
+        }
 
+        // Duplicate email check
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already registered");
         }
 
+        // Owner must specify type
+        if (request.getRole() == Role.OWNER && request.getOwnerType() == null) {
+            throw new RuntimeException("Owner type must be provided");
+        }
+
         User user = new User();
+
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setMobile(request.getMobile());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setCity(request.getCity());
+        user.setGender(request.getGender());
+
         user.setRole(request.getRole());
+        user.setEnabled(true);
 
         User savedUser = userRepository.save(user);
 
+        // If OWNER → create Owner profile
         if (savedUser.getRole() == Role.OWNER) {
 
             Owner owner = new Owner();
@@ -56,6 +74,8 @@ public class UserServiceImpl implements UserService {
         return savedUser;
     }
 
+    // ---------------- LOGIN ----------------
+
     @Override
     public User authenticate(LoginRequest request) {
 
@@ -66,8 +86,14 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Invalid email/password");
         }
 
+        if (!user.isEnabled()) {
+            throw new RuntimeException("User account disabled by admin");
+        }
+
         return user;
     }
+
+    // ---------------- FETCH ----------------
 
     @Override
     public User getUserById(Long id) {

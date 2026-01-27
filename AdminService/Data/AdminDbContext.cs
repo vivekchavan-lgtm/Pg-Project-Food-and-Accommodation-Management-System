@@ -1,6 +1,5 @@
-﻿
+﻿using AdminService.Entities;
 using Microsoft.EntityFrameworkCore;
-using AdminService.Models;
 
 namespace AdminService.Data
 {
@@ -9,6 +8,7 @@ namespace AdminService.Data
         public AdminDbContext(DbContextOptions<AdminDbContext> options)
             : base(options) { }
 
-        public DbSet<AdminUser> AdminUsers { get; set; }
+        public DbSet<User> Users => Set<User>();
+        public DbSet<Owner> Owners => Set<Owner>();
     }
 }
