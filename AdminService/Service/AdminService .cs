@@ -19,15 +19,40 @@ namespace AdminService.Services
 
         public IEnumerable<User> GetAllUsers()
         {
-            return _context.Users.ToList();
+            //return _context.Users.ToList();
+            return _context.Users.Where(u => u.Enabled == true).ToList();
         }
 
+        //public void DeleteUser(long id)
+        //{
+        //    var user = _context.Users.Find(id)
+        //        ?? throw new Exception("User not found");
+
+        //    //_context.Users.Remove(user);
+        //    //_context.SaveChanges();
+        //    var owner = _context.Owners.FirstOrDefault(o => o.OwnerId == id);
+        //    if (owner != null)
+        //    {
+        //        _context.Owners.Remove(owner);
+        //    }
+
+        //    //  remove the User (The Parent)
+        //    _context.Users.Remove(user);
+
+        //    // Save everything in one transaction
+        //    _context.SaveChanges();
+        //}
         public void DeleteUser(long id)
         {
+            // 1. Find the User
             var user = _context.Users.Find(id)
-                ?? throw new Exception("User not found");
+                       ?? throw new Exception("User not found");
 
-            _context.Users.Remove(user);
+            // 2. SOFT DELETE: Just flip the flag
+            // This avoids all Foreign Key "Child" record errors
+            user.Enabled = false;
+
+            // 3. Save the update
             _context.SaveChanges();
         }
 
@@ -61,8 +86,8 @@ namespace AdminService.Services
             var owner = _context.Owners.Find(id)
                 ?? throw new Exception("Owner not found");
 
-            owner.Status = "APPROVED";
-
+            //owner.Status = "APPROVED";
+            owner.Status = "ACTIVE";
             _context.SaveChanges();
             return owner;
         }
@@ -72,8 +97,8 @@ namespace AdminService.Services
             var owner = _context.Owners.Find(id)
                 ?? throw new Exception("Owner not found");
 
-            owner.Status = "REJECTED";
-
+            //owner.Status = "REJECTED";
+            owner.Status = "INACTIVE";
             _context.SaveChanges();
             return owner;
         }
@@ -84,7 +109,9 @@ namespace AdminService.Services
                 TotalUsers = _context.Users.Count(),
                 ActiveUsers = _context.Users.Count(u => u.Enabled),
                 PendingOwners = _context.Owners.Count(o => o.Status == "PENDING"),
-                ApprovedOwners = _context.Owners.Count(o => o.Status == "APPROVED"),
+                //ApprovedOwners = _context.Owners.Count(o => o.Status == "APPROVED"),
+                ApprovedOwners = _context.Owners.Count(o => o.Status == "ACTIVE"),
+
                 PgOwners = _context.Owners.Count(o => o.OwnerType == "PG"),
                 MessOwners = _context.Owners.Count(o => o.OwnerType == "MESS")
             };
