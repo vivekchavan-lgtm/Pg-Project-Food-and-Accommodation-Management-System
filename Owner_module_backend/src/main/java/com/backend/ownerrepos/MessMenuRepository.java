@@ -15,7 +15,8 @@ public interface MessMenuRepository extends JpaRepository<MessMenu, Long> {
     List<MessMenu> findByMessOwner(MessOwner messOwner);
 
     // Get menu items by ownerId
-    List<MessMenu> findByMessOwnerOwnerId(Long ownerId);
+    @org.springframework.data.jpa.repository.Query("SELECT m FROM MessMenu m WHERE m.messOwner.ownerId = :ownerId")
+    List<MessMenu> findByMessOwnerOwnerId(@org.springframework.data.repository.query.Param("ownerId") Long ownerId);
 
     // Get available menu items
     List<MessMenu> findByAvailableTrue();

@@ -1,260 +1,245 @@
-// src/pages/AdminDashboard.jsx
-import React, { useEffect, useState } from 'react'
-import AdminStatsCard from '../components/AdminStatsCard'
-import Modal from '../components/Modal'
-import ConfirmDialog from '../components/ConfirmDialog'
-import { 
-  getMenus, 
-  getBookings, 
-  getUsers, 
-  addMenu, 
-  updateMenu, 
-  deleteMenu, 
-  updateBooking 
-} from '../services/mockApi'
-import { addNotification } from '../services/notifications'
-import { useAuth } from '../contexts/AuthContext'
+import React, { useEffect, useState } from 'react';
+import {
+  getAllUsers,
+  getAllOwners,
+  getPendingOwners,
+  approveOwner,
+  rejectOwner,
+  deleteUser,
+  disableUser,
+  getStats
+} from '../services/adminService';
+import Navbar from '../components/Navbar';
 
-export default function AdminDashboard(){
-
-  const { user } = useAuth()
-
-  const [menus, setMenus] = useState([])
-  const [bookings, setBookings] = useState([])
-  const [users, setUsers] = useState([])
-
-  const [loading, setLoading] = useState(false)
-
-  // Modal + form states
-  const [menuModalOpen, setMenuModalOpen] = useState(false)
-  const [editingMenu, setEditingMenu] = useState(null)
-  const [menuForm, setMenuForm] = useState({ name:'', type:'Lunch', price:0 })
-
-  // Delete confirmation
-  const [confirmOpen, setConfirmOpen] = useState(false)
-  const [menuToDelete, setMenuToDelete] = useState(null)
+export default function AdminDashboard() {
+  const [stats, setStats] = useState({ totalUsers: 0, totalOwners: 0, activeBookings: 0, pendingApprovals: 0 });
+  const [users, setUsers] = useState([]);
+  const [owners, setOwners] = useState([]);
+  const [pendingOwners, setPendingOwners] = useState([]);
+  const [view, setView] = useState('dashboard'); // dashboard, users, owners, approvals
 
   useEffect(() => {
-    loadAll()
-  }, [])
+    fetchStats();
+  }, []);
 
-  async function loadAll(){
-    setLoading(true)
-    const [m, b, u] = await Promise.all([
-      getMenus(),
-      getBookings(),
-      getUsers()
-    ])
-    setMenus(m)
-    setBookings(b)
-    setUsers(u)
-    setLoading(false)
-  }
-
-  /* Menu actions */
-  function openAddMenu(){
-    setEditingMenu(null)
-    setMenuForm({ name:'', type:'Lunch', price:0 })
-    setMenuModalOpen(true)
-  }
-
-  function startEditMenu(m){
-    setEditingMenu(m)
-    setMenuForm({ name:m.name, type:m.type, price:m.price })
-    setMenuModalOpen(true)
-  }
-
-  async function saveMenu(e){
-    e?.preventDefault()
-    if(!menuForm.name) return alert('Enter menu name')
-    if(editingMenu){
-      await updateMenu(editingMenu.id, menuForm)
-      // notify admin (itself) — optionally notify others
-      await addNotification({
-        to: 'admin',
-        title: 'Menu updated',
-        body: `Menu "${menuForm.name}" was updated.`,
-        meta: { menuId: editingMenu.id }
-      })
-      setEditingMenu(null)
-    } else {
-      const added = await addMenu(menuForm)
-      await addNotification({
-        to: 'admin',
-        title: 'Menu added',
-        body: `Menu "${menuForm.name}" was added (id: ${added.id}).`,
-        meta: { menu: added }
-      })
+  const fetchStats = async () => {
+    try {
+      const res = await getStats();
+      setStats(res.data);
+    } catch (err) {
+      console.error("Error fetching stats", err);
     }
-    setMenuForm({ name:'', type:'Lunch', price:0 })
-    await loadAll()
-  }
+  };
 
-  function confirmDeleteMenu(id){
-    setMenuToDelete(id)
-    setConfirmOpen(true)
-  }
-
-  async function doDeleteMenu(){
-    if(!menuToDelete) return setConfirmOpen(false)
-    await deleteMenu(menuToDelete)
-    await addNotification({
-      to: 'admin',
-      title: 'Menu deleted',
-      body: `Menu id ${menuToDelete} was deleted.`,
-      meta: { menuId: menuToDelete }
-    })
-    setConfirmOpen(false)
-    setMenuToDelete(null)
-    await loadAll()
-  }
-
-  /* Booking actions */
-  async function handleBookingStatus(id, status){
-    await updateBooking(id, { status })
-    // notify everyone relevant
-    const booking = bookings.find(b => b.id === id)
-    await addNotification({
-      to: 'all',
-      title: `Booking #${id} ${status}`,
-      body: `Booking #${id} has been ${status} by admin.`,
-      meta: { bookingId: id, status }
-    })
-    if (booking) {
-      if (booking.username) {
-        await addNotification({
-          to: booking.username,
-          title: `Your booking #${id} ${status}`,
-          body: `Your booking was ${status} by admin.`,
-          meta: { bookingId: id, status }
-        })
-      }
-      if (booking.owner) {
-        await addNotification({
-          to: booking.owner,
-          title: `Booking #${id} ${status}`,
-          body: `A booking for your item was ${status} by admin.`,
-          meta: { bookingId: id, status }
-        })
-      }
+  const loadUsers = async () => {
+    try {
+      const res = await getAllUsers();
+      setUsers(res.data);
+      setView('users');
+    } catch (err) {
+      console.error("Error fetching users", err);
     }
-    await loadAll()
-  }
+  };
 
-  const pendingCount = bookings.filter(b => b.status === 'pending').length
-  const approvedCount = bookings.filter(b => b.status === 'approved').length
+  const loadOwners = async () => {
+    try {
+      const res = await getAllOwners();
+      setOwners(res.data);
+      setView('owners');
+    } catch (err) {
+      console.error("Error fetching owners", err);
+    }
+  };
+
+  const loadPending = async () => {
+    try {
+      const res = await getPendingOwners();
+      setPendingOwners(res.data);
+      setView('approvals');
+    } catch (err) {
+      console.error("Error fetching pending owners", err);
+    }
+  };
+
+  const handleApprove = async (id) => {
+    try {
+      await approveOwner(id);
+      alert("Owner Approved");
+      loadPending();
+      fetchStats();
+    } catch (err) {
+      alert("Error approving owner");
+    }
+  };
+
+  const handleReject = async (id) => {
+    if (!window.confirm("Are you sure you want to reject this owner?")) return;
+    try {
+      await rejectOwner(id);
+      alert("Owner Rejected");
+      loadPending();
+      fetchStats();
+    } catch (err) {
+      alert("Error rejecting owner");
+    }
+  };
+
+  const handleDeleteUser = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this user?")) return;
+    try {
+      await deleteUser(id);
+      loadUsers();
+      fetchStats();
+    } catch (err) {
+      alert("Error deleting user");
+    }
+  }
 
   return (
-    <div className="container" style={{paddingTop:20}}>
-      <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', gap:12}}>
-        <h1 className="page-title">Admin Dashboard</h1>
-        <div className="small">Signed in as <strong>{user?.username}</strong></div>
-      </div>
+    <div style={{ minHeight: '100vh', background: '#f4f6f8' }}>
+      <Navbar />
+      <div style={{ display: 'flex', height: 'calc(100vh - 60px)' }}>
 
-      <section style={{display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:12, marginTop:12}}>
-        <AdminStatsCard title="Total Menus" value={menus.length} />
-        <AdminStatsCard title="Bookings (pending)" value={pendingCount} />
-        <AdminStatsCard title="Bookings (approved)" value={approvedCount} />
-      </section>
-
-      <section style={{display:'grid', gridTemplateColumns:'2fr 1fr', gap:12, marginTop:12}}>
-        <div>
-          <div className="card" style={{marginBottom:12}}>
-            <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
-              <h3 style={{marginTop:0}}>Bookings</h3>
-              <div className="small">Total: {bookings.length}</div>
-            </div>
-
-            {bookings.length === 0 && <div className="small" style={{marginTop:8}}>No bookings yet.</div>}
-            <div style={{marginTop:8}}>
-              {bookings.map(b => (
-                <div key={b.id} style={{display:'flex', justifyContent:'space-between', alignItems:'center', padding:'8px 0', borderBottom:'1px dashed #eee'}}>
-                  <div>
-                    <div><strong>#{b.id}</strong> <span className="small">by {b.username}</span></div>
-                    <div className="small">Menu: {b.menuId} • Room: {b.roomNumber} • Nights: {b.nights}</div>
-                    <div className="small">Status: {b.status}</div>
-                  </div>
-                  <div style={{display:'flex', flexDirection:'column', gap:6}}>
-                    <button className="btn-primary" onClick={()=>handleBookingStatus(b.id,'approved')}>Approve</button>
-                    <button className="btn-link" onClick={()=>handleBookingStatus(b.id,'rejected')}>Reject</button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="card" style={{marginTop:12}}>
-            <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
-              <h3 style={{marginTop:0}}>All Menus</h3>
-              <div>
-                <button className="btn-primary" onClick={openAddMenu}>Add Menu</button>
-              </div>
-            </div>
-
-            <div style={{marginTop:8}}>
-              {menus.map(m => (
-                <div key={m.id} style={{display:'flex', justifyContent:'space-between', padding:'8px 0', borderBottom:'1px dashed #eee'}}>
-                  <div>
-                    <div><strong>{m.name}</strong></div>
-                    <div className="small">{m.type} • ₹{m.price}</div>
-                  </div>
-                  <div style={{display:'flex', gap:8}}>
-                    <button className="btn-link" onClick={()=>startEditMenu(m)}>Edit</button>
-                    <button className="btn-link" onClick={()=>confirmDeleteMenu(m.id)}>Delete</button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+        {/* Sidebar */}
+        <div style={{ width: '250px', background: '#fff', padding: '20px', borderRight: '1px solid #ddd' }}>
+          <h3>Admin Panel</h3>
+          <ul style={{ listStyle: 'none', padding: 0 }}>
+            <li onClick={() => setView('dashboard')} style={{ ...styles.menuItem, fontWeight: view === 'dashboard' ? 'bold' : 'normal' }}>Dashboard</li>
+            <li onClick={loadUsers} style={{ ...styles.menuItem, fontWeight: view === 'users' ? 'bold' : 'normal' }}>Manage Users</li>
+            <li onClick={loadOwners} style={{ ...styles.menuItem, fontWeight: view === 'owners' ? 'bold' : 'normal' }}>Manage Owners</li>
+            <li onClick={loadPending} style={{ ...styles.menuItem, fontWeight: view === 'approvals' ? 'bold' : 'normal' }}>
+              Pending Approvals
+              {stats.pendingApprovals > 0 && <span style={styles.badge}>{stats.pendingApprovals}</span>}
+            </li>
+          </ul>
         </div>
 
-        <aside>
-          <div className="card">
-            <h3 style={{marginTop:0}}>Users</h3>
-            <div className="small" style={{marginTop:8}}>Total users: {users.length}</div>
-            <div style={{marginTop:8}}>
-              {users.map(u => (
-                <div key={u.id} style={{display:'flex', justifyContent:'space-between', padding:'8px 0', borderBottom:'1px dashed #eee'}}>
-                  <div>
-                    <div><strong>{u.username}</strong></div>
-                    <div className="small">Role: {u.role}</div>
-                  </div>
+        {/* Content */}
+        <div style={{ flex: 1, padding: '30px', overflowY: 'auto' }}>
+
+          {view === 'dashboard' && (
+            <div>
+              <h2>Dashboard Overview</h2>
+              <div style={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
+                <StatCard title="Total Users" value={stats.totalUsers} color="#3b82f6" />
+                <StatCard title="Total Owners" value={stats.totalOwners} color="#10b981" />
+                <StatCard title="Pending Approvals" value={stats.pendingApprovals} color="#f59e0b" />
+                <StatCard title="Revenue (Demo)" value="₹0" color="#6366f1" />
+              </div>
+            </div>
+          )}
+
+          {view === 'users' && (
+            <div>
+              <h2>Manage Users</h2>
+              <table style={styles.table}>
+                <thead>
+                  <tr>
+                    <th style={styles.th}>ID</th>
+                    <th style={styles.th}>Name</th>
+                    <th style={styles.th}>Email</th>
+                    <th style={styles.th}>Role</th>
+                    <th style={styles.th}>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {users.map(u => (
+                    <tr key={u.id}>
+                      <td style={styles.td}>{u.id}</td>
+                      <td style={styles.td}>{u.firstName} {u.lastName}</td>
+                      <td style={styles.td}>{u.email}</td>
+                      <td style={styles.td}>{u.role}</td>
+                      <td style={styles.td}>
+                        <button onClick={() => handleDeleteUser(u.id)} style={styles.deleteBtn}>Delete</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {view === 'owners' && (
+            <div>
+              <h2>All Owners</h2>
+              <table style={styles.table}>
+                <thead>
+                  <tr>
+                    <th style={styles.th}>ID</th>
+                    <th style={styles.th}>Owner Name</th>
+                    <th style={styles.th}>Business Name</th>
+                    <th style={styles.th}>Type</th>
+                    <th style={styles.th}>Status</th>
+                    <th style={styles.th}>Contact</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {owners.map(o => (
+                    <tr key={o.ownerId}>
+                      <td style={styles.td}>{o.ownerId}</td>
+                      <td style={styles.td}>{o.name}</td>
+                      <td style={styles.td}>{o.ownerType === 'PG' ? o.pgName : o.messName}</td>
+                      <td style={styles.td}>{o.ownerType}</td>
+                      <td style={styles.td}>
+                        <span style={{
+                          padding: '4px 8px', borderRadius: '12px', fontSize: '12px',
+                          background: o.status === 'ACTIVE' ? '#d1fae5' : '#fee2e2',
+                          color: o.status === 'ACTIVE' ? '#065f46' : '#991b1b'
+                        }}>
+                          {o.status}
+                        </span>
+                      </td>
+                      <td style={styles.td}>{o.contactNo}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {view === 'approvals' && (
+            <div>
+              <h2>Pending Approvals</h2>
+              {pendingOwners.length === 0 ? <p>No pending approvals.</p> : (
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>
+                  {pendingOwners.map(owner => (
+                    <div key={owner.ownerId} style={styles.card}>
+                      <h4>{owner.ownerType === 'PG' ? owner.pgName : owner.messName} ({owner.ownerType})</h4>
+                      <p><strong>Owner:</strong> {owner.name}</p>
+                      <p><strong>Email:</strong> {owner.email}</p>
+                      <p><strong>Meta:</strong> {owner.address}</p>
+                      <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+                        <button onClick={() => handleApprove(owner.ownerId)} style={styles.approveBtn}>Approve</button>
+                        <button onClick={() => handleReject(owner.ownerId)} style={styles.rejectBtn}>Reject</button>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              )}
             </div>
-          </div>
+          )}
 
-          <div className="card" style={{marginTop:12}}>
-            <h3 style={{marginTop:0}}>Quick Actions</h3>
-            <div style={{display:'flex', flexDirection:'column', gap:8, marginTop:8}}>
-              <button className="btn-primary" onClick={loadAll}>Refresh</button>
-              <button className="btn-link" onClick={()=>{ setMenus([]); setBookings([]); setUsers([]) }}>Clear View</button>
-            </div>
-          </div>
-        </aside>
-      </section>
-
-      {/* Menu modal */}
-      <Modal open={menuModalOpen} title={editingMenu ? 'Edit Menu' : 'Add Menu'} onClose={()=>setMenuModalOpen(false)}>
-        <form onSubmit={saveMenu} style={{display:'grid', gap:8}}>
-          <input className="input" placeholder="Menu name" value={menuForm.name} onChange={e=>setMenuForm({...menuForm, name:e.target.value})} />
-          <select className="input" value={menuForm.type} onChange={e=>setMenuForm({...menuForm, type:e.target.value})}>
-            <option>Breakfast</option>
-            <option>Lunch</option>
-            <option>Dinner</option>
-          </select>
-          <input className="input" type="number" value={menuForm.price} onChange={e=>setMenuForm({...menuForm, price:Number(e.target.value)})} />
-          <div style={{display:'flex', justifyContent:'flex-end', gap:8}}>
-            <button className="btn-link" type="button" onClick={()=>setMenuModalOpen(false)}>Cancel</button>
-            <button className="btn-primary" type="submit">{editingMenu ? 'Save' : 'Add'}</button>
-          </div>
-        </form>
-      </Modal>
-
-      <ConfirmDialog open={confirmOpen} title="Delete menu?" onCancel={()=>setConfirmOpen(false)} onConfirm={doDeleteMenu}>
-        <div className="small">This will permanently remove the menu from local data (you can change this later to call an API).</div>
-      </ConfirmDialog>
-
+        </div>
+      </div>
     </div>
-  )
+  );
 }
+
+const StatCard = ({ title, value, color }) => (
+  <div style={{ background: '#fff', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', flex: 1, borderLeft: `4px solid ${color}` }}>
+    <h3 style={{ margin: 0, fontSize: '14px', color: '#666' }}>{title}</h3>
+    <p style={{ margin: '10px 0 0', fontSize: '24px', fontWeight: 'bold' }}>{value}</p>
+  </div>
+);
+
+const styles = {
+  menuItem: { padding: '10px', cursor: 'pointer', borderRadius: '4px', marginBottom: '5px', display: 'flex', justifyContent: 'space-between' },
+  badge: { background: '#ef4444', color: '#fff', borderRadius: '50%', padding: '2px 6px', fontSize: '10px' },
+  table: { width: '100%', borderCollapse: 'collapse', background: '#fff', borderRadius: '8px', overflow: 'hidden' },
+  th: { textAlign: 'left', padding: '12px', background: '#f9fafb', borderBottom: '1px solid #ddd' },
+  td: { padding: '12px', borderBottom: '1px solid #eee' },
+  card: { background: '#fff', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' },
+  approveBtn: { background: '#10b981', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer' },
+  rejectBtn: { background: '#ef4444', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer' },
+  deleteBtn: { background: '#fee2e2', color: '#b91c1c', border: 'none', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '12px' },
+};

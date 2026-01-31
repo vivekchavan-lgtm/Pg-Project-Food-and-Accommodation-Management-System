@@ -17,23 +17,24 @@ export default function Login() {
     setLoading(true);
     try {
       const res = await loginUser({ email, password });
-     console.log("LOGIN RESPONSE:", res.data);
+      console.log("LOGIN RESPONSE:", res.data);
 
       login(res.data);
 
       if (res.data.role === "ADMIN") {
-  navigate("/admin");
-} else if (res.data.role === "OWNER") {
-  if (res.data.ownerType === "PG") {
-    navigate("/owner/pg/dashboard");
-  } else if (res.data.ownerType === "MESS") {
-    navigate("/owner/mess/dashboard");
-  } else {
-    navigate("/owner"); // fallback
-  }
-} else {
-  navigate("/home");
-}
+        navigate("/admin/dashboard");
+      } else if (res.data.role === "OWNER") {
+        if (res.data.ownerType === "PG") {
+          navigate("/owner/pg/dashboard");
+        } else if (res.data.ownerType === "MESS") {
+          navigate("/owner/mess/dashboard");
+        } else {
+          console.error("Unknown Owner Type");
+          navigate("/login");
+        }
+      } else {
+        navigate("/user/home");
+      }
     } catch {
       alert("Invalid credentials");
     } finally {

@@ -16,7 +16,11 @@ public interface OwnerService {
 
     List<Owner> getOwnersByStatus(OwnerStatus status);
 
+    List<Owner> getOwnersByTypeAndStatus(OwnerType type, OwnerStatus status);
+
     Owner updateOwnerStatus(Long ownerId, OwnerStatus status);
+
+    Owner updateOwnerProfile(Long ownerId, com.backend.dtos.OwnerProfileUpdateDto dto);
 
     void deleteOwner(Long ownerId);
 }

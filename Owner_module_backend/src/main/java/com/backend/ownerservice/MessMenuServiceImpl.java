@@ -23,14 +23,17 @@ public class MessMenuServiceImpl implements MessMenuService {
     }
 
     @Override
-    public MessMenu addMenuItem(Long ownerId, MessMenu menu) {
+    public MessMenu addMenuItem(Long userId, MessMenu menu) {
+        System.out.println("DEBUG: MessMenuServiceImpl.addMenuItem - Searching owner for userId: " + userId);
+        MessOwner messOwner = messOwnerRepository.findByUser_UserId(userId)
+                .orElseThrow(() -> new RuntimeException("Mess Owner not found for userId: " + userId));
 
-        MessOwner messOwner = messOwnerRepository.findById(ownerId)
-                .orElseThrow(() -> new RuntimeException("Mess Owner not found"));
-
+        System.out.println("DEBUG: MessMenuServiceImpl.addMenuItem - Found owner: " + messOwner.getEmail());
         menu.setMessOwner(messOwner);
 
-        return messMenuRepository.save(menu);
+        MessMenu saved = messMenuRepository.save(menu);
+        System.out.println("DEBUG: MessMenuServiceImpl.addMenuItem - Saved item: " + saved.getItemName());
+        return saved;
     }
 
     @Override
@@ -59,8 +62,14 @@ public class MessMenuServiceImpl implements MessMenuService {
     }
 
     @Override
-    public List<MessMenu> getMenuByOwner(Long ownerId) {
-        return messMenuRepository.findByMessOwnerOwnerId(ownerId);
+    public List<MessMenu> getMenuByOwner(Long userId) {
+        System.out.println("DEBUG: MessMenuServiceImpl.getMenuByOwner - userId: " + userId);
+        MessOwner messOwner = messOwnerRepository.findByUser_UserId(userId)
+                .orElseThrow(() -> new RuntimeException("Mess Owner not found for userId: " + userId));
+        
+        List<MessMenu> items = messMenuRepository.findByMessOwnerOwnerId(messOwner.getOwnerId());
+        System.out.println("DEBUG: MessMenuServiceImpl.getMenuByOwner - found " + items.size() + " items");
+        return items;
     }
 
     @Override

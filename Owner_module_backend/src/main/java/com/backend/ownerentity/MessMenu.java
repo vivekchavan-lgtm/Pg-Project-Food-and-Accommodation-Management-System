@@ -32,5 +32,6 @@ public class MessMenu {
     // 🔗 Relationship to MessOwner
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", nullable = false)
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private MessOwner messOwner;
 }

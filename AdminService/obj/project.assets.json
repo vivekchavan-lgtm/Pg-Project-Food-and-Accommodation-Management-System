@@ -3065,23 +3065,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Vishwajeet\\.nuget\\packages\\": {},
+    "C:\\Users\\chava\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Vishwajeet\\Desktop\\GIT Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\AdminService.csproj",
+      "projectUniqueName": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\AdminService.csproj",
       "projectName": "AdminService",
-      "projectPath": "C:\\Users\\Vishwajeet\\Desktop\\GIT Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\AdminService.csproj",
-      "packagesPath": "C:\\Users\\Vishwajeet\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Vishwajeet\\Desktop\\GIT Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\obj\\",
+      "projectPath": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\AdminService.csproj",
+      "packagesPath": "C:\\Users\\chava\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\chava\\OneDrive\\Desktop\\DAC_Project\\Pg-Project-Food-and-Accommodation-Management-System\\AdminService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Vishwajeet\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\chava\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -3108,7 +3108,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "10.0.100"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
@@ -3166,7 +3166,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.102/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.308/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

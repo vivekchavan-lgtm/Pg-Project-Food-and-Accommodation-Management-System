@@ -11,6 +11,7 @@ public class RegisterResponse {
     private Long userId;
 
     private String role;
+    private String name;
 
     private String ownerType;
 }

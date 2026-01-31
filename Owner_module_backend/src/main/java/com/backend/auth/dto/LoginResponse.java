@@ -11,6 +11,7 @@ public class LoginResponse {
     private Long userId;
 
     private String role;
+    private String name;
 
     private String ownerType; // PG / MESS (null for USER)
 

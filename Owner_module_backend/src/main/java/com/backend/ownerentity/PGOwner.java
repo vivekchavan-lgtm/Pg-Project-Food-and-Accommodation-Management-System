@@ -18,10 +18,13 @@ public class PGOwner extends Owner {
     @Min(1)
     private int totalRooms;
 
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = PgTypeConverter.class)
     @Column(name = "pg_type", nullable = false)
     private PgType pgType;   // BOYS / GIRLS / BOTH
 
     @Column(name = "facilities" ,length = 500)
     private String facilities;
+
+    @Column(name = "image_url", length = 500)
+    private String imageUrl;
 }

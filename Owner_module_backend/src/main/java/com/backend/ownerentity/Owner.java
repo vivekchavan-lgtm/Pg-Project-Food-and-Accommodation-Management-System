@@ -1,6 +1,7 @@
 package com.backend.ownerentity;
 
 import com.backend.userentity.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,6 +12,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@com.fasterxml.jackson.annotation.JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Owner {
 
     @Id
@@ -21,9 +23,10 @@ public class Owner {
     @OneToOne
     @MapsId
     @JoinColumn(name = "owner_id")
+    @JsonIgnore
     private User user;
 
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = OwnerTypeConverter.class)
     @Column(name = "owner_type", nullable = false)
     private OwnerType ownerType;   // PG / MESS
 
@@ -39,11 +42,11 @@ public class Owner {
     @Column(name = "address", nullable = false)
     private String address;
 
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = OwnerStatusConverter.class)
     @Column(name = "status", nullable = false)
     private OwnerStatus status;  // ACTIVE / INACTIVE / PENDING
 
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = IdCardTypeConverter.class)
     @Column(name = "id_card_type", nullable = false)
     private IdCardType idCardType;
 

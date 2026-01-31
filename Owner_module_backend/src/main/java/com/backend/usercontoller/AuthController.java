@@ -26,6 +26,7 @@ public class AuthController {
         LoginResponse response = new LoginResponse();
         response.setUserId(user.getId());
         response.setRole(user.getRole().name());
+        response.setName(user.getFirstName() + " " + user.getLastName());
 
         Owner owner = user.getOwner();
         if (owner != null) {
@@ -33,6 +34,8 @@ public class AuthController {
         }
 
         response.setToken("dummy-jwt-token");
+
+        System.out.println("DEBUG: LoginResponse created for user: " + response.getName() + " with role: " + response.getRole());
 
         return response;
     }
@@ -46,6 +49,7 @@ public class AuthController {
         RegisterResponse response = new RegisterResponse();
         response.setUserId(savedUser.getId());
         response.setRole(savedUser.getRole().name());
+        response.setName(savedUser.getFirstName() + " " + savedUser.getLastName());
 
         if (savedUser.getOwner() != null) {
             response.setOwnerType(savedUser.getOwner().getOwnerType().name());

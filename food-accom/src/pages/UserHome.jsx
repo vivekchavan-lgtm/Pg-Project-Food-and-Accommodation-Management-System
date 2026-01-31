@@ -1,213 +1,107 @@
-// src/pages/UserHome.jsx
-import React, { useEffect, useState } from 'react'
-import { getMenus, getRooms, getBookings, addBooking } from '../services/mockApi'
-import { addNotification } from '../services/notifications'
-import { useAuth } from '../contexts/AuthContext'
+import React, { useEffect, useState } from 'react';
+import { getAllOwners } from '../services/ownerService';
+import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import Rating from '../components/Rating'; // We can use this to show avg rating if we had it in list api, but list api returns owner entity. 
+// Ideally we need avg rating in owner list response. For now I'll just show styles.
 
-export default function UserHome(){
-  const { user } = useAuth()
-  const username = user?.username || ''
+export default function UserHome() {
+  const [owners, setOwners] = useState([]);
+  const [filter, setFilter] = useState('ALL'); // ALL, PG, MESS
+  const navigate = useNavigate();
 
-  const [menus, setMenus] = useState([])
-  const [rooms, setRooms] = useState([])
-  const [bookings, setBookings] = useState([])
+  useEffect(() => {
+    loadOwners();
+  }, []);
 
-  // form states
-  const [foodForm, setFoodForm] = useState({ menuId:'', nights:1 })
-  const [roomForm, setRoomForm] = useState({ roomId:'', nights:1 })
-
-  const [loading, setLoading] = useState(false)
-
-  useEffect(()=> { loadAll() }, [])
-
-  async function loadAll(){
-    setLoading(true)
+  const loadOwners = async () => {
     try {
-      const [m, r, b] = await Promise.all([getMenus(), getRooms(), getBookings()])
-      setMenus(Array.isArray(m) ? m : [])
-      setRooms(Array.isArray(r) ? r : [])
-      // show only this user's bookings
-      setBookings((Array.isArray(b) ? b : []).filter(x => x.username === username))
+      const res = await getAllOwners();
+      setOwners(res.data);
     } catch (err) {
-      console.error('loadAll userhome error', err)
-    } finally {
-      setLoading(false)
+      console.error("Failed to load owners", err);
     }
-  }
+  };
 
-  // FOOD booking
-  async function handleFoodBooking(e){
-    e.preventDefault()
-    if(!foodForm.menuId) return alert('Please select a menu')
-    try {
-      await addBooking({
-        username,
-        menuId: Number(foodForm.menuId),
-        nights: Number(foodForm.nights)
-      })
-
-      // 🔔 Notify admin
-      await addNotification({
-        to: 'admin',
-        title: 'New food booking',
-        body: `User ${username} requested menu ${foodForm.menuId}`,
-        meta: { type: 'booking', kind: 'food' }
-      })
-
-      // 🔔 Notify the owner of the menu
-      const menu = menus.find(m => String(m.id) === String(foodForm.menuId))
-      if (menu?.owner) {
-        await addNotification({
-          to: menu.owner,
-          title: 'New booking request',
-          body: `User ${username} requested ${menu.name}`,
-          meta: { bookingType: 'food' }
-        })
-      }
-
-      setFoodForm({ menuId:'', nights:1 })
-      await loadAll()
-      alert('Food booking requested (pending approval)')
-    } catch (err) {
-      console.error('food booking error', err)
-      alert('Failed to create booking')
-    }
-  }
-
-  // ROOM booking
-  async function handleRoomBooking(e){
-    e.preventDefault()
-    if(!roomForm.roomId) return alert('Please select a room')
-    const room = rooms.find(r => String(r.id) === String(roomForm.roomId))
-    if(!room) return alert('Selected room not found')
-    if(!room.available) return alert('Selected room is not available')
-
-    try {
-      await addBooking({
-        username,
-        roomId: Number(roomForm.roomId),
-        roomNumber: room.number,
-        nights: Number(roomForm.nights)
-      })
-
-      // 🔔 Notify admin
-      await addNotification({
-        to: 'admin',
-        title: 'New room booking',
-        body: `User ${username} requested room ${room.number}`,
-        meta: { type: 'booking', kind: 'room' }
-      })
-
-      // 🔔 Notify the owner of the room
-      if (room?.owner) {
-        await addNotification({
-          to: room.owner,
-          title: 'New booking request',
-          body: `User ${username} requested room ${room.number}`,
-          meta: { bookingType: 'room' }
-        })
-      }
-
-      setRoomForm({ roomId:'', nights:1 })
-      await loadAll()
-      alert('Room booking requested (pending approval)')
-    } catch (err) {
-      console.error('room booking error', err)
-      alert('Failed to create room booking')
-    }
-  }
+  const filteredOwners = owners.filter(o =>
+    filter === 'ALL' ? true : o.ownerType === filter
+  );
 
   return (
-    <div className="container" style={{paddingTop:20}}>
-      <h1 className="page-title">Welcome, {username || 'Guest'}</h1>
+    <div style={{ minHeight: '100vh', background: '#f3f4f6' }}>
+      <Navbar />
+      <div className="container" style={{ paddingTop: '20px' }}>
 
-      {loading && <div className="small">Loading...</div>}
-
-      <section style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:12, marginTop:12}}>
-        <div className="card">
-          <h3 style={{marginTop:0}}>Available Menus</h3>
-          {menus.length === 0 && <div className="small">No menus available.</div>}
-          <div style={{marginTop:8, display:'grid', gap:8}}>
-            {menus.map(m => (
-              <div key={m.id} style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
-                <div>
-                  <strong>{m.name}</strong>
-                  <div className="small">{m.type} • ₹{m.price}</div>
-                </div>
-                <div className="small">ID: {m.id}</div>
-              </div>
-            ))}
-          </div>
-
-          <hr style={{margin:'12px 0'}} />
-
-          <h4>Create Food Booking</h4>
-          <form onSubmit={handleFoodBooking} style={{display:'grid', gap:8, marginTop:8, maxWidth:420}}>
-            <select className="input" value={foodForm.menuId} onChange={e=>setFoodForm({...foodForm, menuId:e.target.value})}>
-              <option value="">-- select menu --</option>
-              {menus.map(m => <option key={m.id} value={m.id}>{m.name} ({m.type}) — ₹{m.price}</option>)}
-            </select>
-            <label className="small">Nights</label>
-            <input className="input" type="number" min="1" value={foodForm.nights} onChange={e=>setFoodForm({...foodForm, nights:e.target.value})} />
-            <button className="btn-primary" type="submit">Request Food Booking</button>
-          </form>
-        </div>
-
-        <div className="card">
-          <h3 style={{marginTop:0}}>Available Rooms</h3>
-          {rooms.length === 0 && <div className="small">No rooms available.</div>}
-          <div style={{marginTop:8, display:'grid', gap:8}}>
-            {rooms.map(r => (
-              <div key={r.id} style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
-                <div>
-                  <strong>{r.number}</strong>
-                  <div className="small">{r.type} • ₹{r.price} • {r.available ? 'Available' : 'Not available'}</div>
-                </div>
-                <div className="small">ID: {r.id}</div>
-              </div>
-            ))}
-          </div>
-
-          <hr style={{margin:'12px 0'}} />
-
-          <h4>Create Room Booking</h4>
-          <form onSubmit={handleRoomBooking} style={{display:'grid', gap:8, marginTop:8, maxWidth:420}}>
-            <select className="input" value={roomForm.roomId} onChange={e=>setRoomForm({...roomForm, roomId:e.target.value})}>
-              <option value="">-- select room --</option>
-              {rooms.map(r => (
-                <option key={r.id} value={r.id} disabled={!r.available}>
-                  {r.number} ({r.type}) — ₹{r.price} {r.available ? '' : '(Not available)'}
-                </option>
-              ))}
-            </select>
-            <label className="small">Nights</label>
-            <input className="input" type="number" min="1" value={roomForm.nights} onChange={e=>setRoomForm({...roomForm, nights:e.target.value})} />
-            <button className="btn-primary" type="submit">Request Room Booking</button>
-          </form>
-        </div>
-      </section>
-
-      <section style={{marginTop:16}}>
-        <div className="card">
-          <h3 style={{marginTop:0}}>Your Bookings</h3>
-          {bookings.length === 0 && <div className="small">You have no bookings.</div>}
-          <div style={{marginTop:8}}>
-            {bookings.map(b => (
-              <div key={b.id} style={{display:'flex', justifyContent:'space-between', padding:'8px 0', borderBottom:'1px dashed #eee'}}>
-                <div>
-                  <div><strong>Booking #{b.id}</strong> • <span className="small">{b.status}</span></div>
-                  <div className="small">
-                    {b.menuId ? <>Food — Menu ID: {b.menuId}</> : null}
-                    {b.roomId ? <>Room — {b.roomNumber} (ID: {b.roomId})</> : null}
-                  </div>
-                  <div className="small">Nights: {b.nights || '-'}</div>
-                </div>
-                <div className="small">{new Date(b.createdAt).toLocaleString()}</div>
-              </div>
+        {/* Hero / Filter Section */}
+        <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+          <h1 style={{ color: '#1f2937' }}>Find Your Perfect Stay & Food</h1>
+          <div style={{ display: 'inline-flex', background: '#fff', padding: '5px', borderRadius: '30px', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
+            {['ALL', 'PG', 'MESS'].map(type => (
+              <button
+                key={type}
+                onClick={() => setFilter(type)}
+                style={{
+                  padding: '10px 25px',
+                  borderRadius: '25px',
+                  border: 'none',
+                  background: filter === type ? '#ff5200' : 'transparent',
+                  color: filter === type ? '#fff' : '#666',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+              >
+                {type === 'ALL' ? 'All' : type === 'PG' ? 'PG / Hostels' : 'Mess / Food'}
+              </button>
             ))}
           </div>
         </div>
-      </section>
+
+        {/* Owners Grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '25px' }}>
+          {filteredOwners.map(owner => (
+            <div
+              key={owner.ownerId}
+              onClick={() => navigate(`/owner-details/${owner.ownerId}`)}
+              style={{
+                background: '#fff',
+                borderRadius: '16px',
+                overflow: 'hidden',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                cursor: 'pointer',
+                transition: 'transform 0.2s',
+              }}
+              onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-5px)'}
+              onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+            >
+              <div style={{ height: '140px', background: owner.ownerType === 'PG' ? '#3b82f6' : '#f59e0b', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.8)', fontSize: '40px' }}>
+                {owner.ownerType === 'PG' ? '🏠' : '🍽️'}
+              </div>
+              <div style={{ padding: '20px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
+                  <h3 style={{ margin: '0 0 5px', color: '#111' }}>{owner.name}</h3>
+                  <span style={{ fontSize: '12px', background: '#f3f4f6', padding: '4px 8px', borderRadius: '6px' }}>{owner.ownerType}</span>
+                </div>
+                <p style={{ margin: '0 0 15px', color: '#666', fontSize: '14px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                  📍 {owner.address}
+                </p>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid #f3f4f6', paddingTop: '15px' }}>
+                  <div style={{ color: '#059669', fontWeight: 'bold', fontSize: '14px' }}>View Details</div>
+                  {/* Placeholder for rating if available in list */}
+                  <div style={{ color: '#f59e0b' }}>★★★★☆</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {filteredOwners.length === 0 && (
+          <div style={{ textAlign: 'center', padding: '40px', color: '#888' }}>
+            No owners found for this category.
+          </div>
+        )}
+
+      </div>
     </div>
-  )
+  );
 }

@@ -35,5 +35,6 @@ public class Room {
     // 🔗 Relationship to PGOwner
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", nullable = false)
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private PGOwner pgOwner;
 }

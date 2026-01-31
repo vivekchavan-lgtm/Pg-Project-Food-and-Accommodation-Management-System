@@ -24,14 +24,17 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Room addRoom(Long ownerId, Room room) {
+    public Room addRoom(Long userId, Room room) {
+        System.out.println("DEBUG: RoomServiceImpl.addRoom - Searching for owner userId: " + userId);
+        PGOwner pgOwner = pgOwnerRepository.findByUser_UserId(userId)
+                .orElseThrow(() -> new RuntimeException("PG Owner not found for userId: " + userId));
 
-        PGOwner pgOwner = pgOwnerRepository.findById(ownerId)
-                .orElseThrow(() -> new RuntimeException("PG Owner not found"));
-
+        System.out.println("DEBUG: RoomServiceImpl.addRoom - Found owner: " + pgOwner.getEmail());
         room.setPgOwner(pgOwner);
 
-        return roomRepository.save(room);
+        Room saved = roomRepository.save(room);
+        System.out.println("DEBUG: RoomServiceImpl.addRoom - Saved room: " + saved.getRoomNumber());
+        return saved;
     }
 
     @Override
@@ -61,8 +64,14 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<Room> getRoomsByOwner(Long ownerId) {
-        return roomRepository.findByPgOwnerOwnerId(ownerId);
+    public List<Room> getRoomsByOwner(Long userId) {
+        System.out.println("DEBUG: RoomServiceImpl.getRoomsByOwner - userId: " + userId);
+        PGOwner pgOwner = pgOwnerRepository.findByUser_UserId(userId)
+                .orElseThrow(() -> new RuntimeException("PG Owner not found for userId: " + userId));
+
+        List<Room> rooms = roomRepository.findByPgOwnerOwnerId(pgOwner.getOwnerId());
+        System.out.println("DEBUG: RoomServiceImpl.getRoomsByOwner - found " + rooms.size() + " rooms");
+        return rooms;
     }
 
     @Override

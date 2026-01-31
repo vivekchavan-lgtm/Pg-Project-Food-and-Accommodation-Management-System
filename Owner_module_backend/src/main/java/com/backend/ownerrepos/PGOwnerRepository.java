@@ -15,4 +15,6 @@ public interface PGOwnerRepository extends JpaRepository<PGOwner, Long> {
 
     // Example: find PGs with minimum rooms
     List<PGOwner> findByTotalRoomsGreaterThan(int rooms);
+
+    java.util.Optional<PGOwner> findByUser_UserId(Long userId);
 }
