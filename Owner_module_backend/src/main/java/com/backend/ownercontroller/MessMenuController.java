@@ -55,11 +55,17 @@ public class MessMenuController {
         return ResponseEntity.ok(messMenuService.getMenuItemById(menuId));
     }
 
-    // Get all menu items for a mess owner
-    @GetMapping("/owner/{ownerId}")
-    public ResponseEntity<List<MessMenu>> getMenuByOwner(@PathVariable Long ownerId) {
-
-        return ResponseEntity.ok(messMenuService.getMenuByOwner(ownerId));
+    // Get all menu items for a mess owner (Dashboard uses USER ID)
+    @GetMapping("/owner/{userId}")
+    public ResponseEntity<?> getMenuByOwner(@PathVariable Long userId) {
+        System.out.println("DEBUG: Fetching Menu for Owner associated with UserId: " + userId);
+        try {
+            return ResponseEntity.ok(messMenuService.getMenuByOwnerByUserId(userId));
+        } catch (Exception e) {
+            System.err.println("CRITICAL ERROR in getMenuByOwner: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body("Error fetching menu: " + e.getMessage());
+        }
     }
 
     // Get all available menu items

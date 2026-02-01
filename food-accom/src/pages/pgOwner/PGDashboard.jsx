@@ -119,10 +119,10 @@ export default function PGDashboard() {
               {bookings.map(booking => (
                 <div key={booking.bookingId} style={itemStyle}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                    <h4 style={{ margin: 0 }}>{booking.user.firstName} {booking.user.lastName}</h4>
+                    <h4 style={{ margin: 0 }}>{booking.userName}</h4>
                     <span style={{ fontSize: '11px', color: '#888' }}>{new Date(booking.createdAt).toLocaleDateString()}</span>
                   </div>
-                  <p style={{ margin: '0 0 5px', fontSize: '13px', color: '#555' }}>📞 {booking.user.mobile}</p>
+                  <p style={{ margin: '0 0 5px', fontSize: '13px', color: '#555' }}>📞 {booking.userMobile}</p>
                   <p style={{ margin: 0, fontSize: '14px', background: '#f8fafc', padding: '8px', borderRadius: '4px' }}>
                     "{booking.message}"
                   </p>

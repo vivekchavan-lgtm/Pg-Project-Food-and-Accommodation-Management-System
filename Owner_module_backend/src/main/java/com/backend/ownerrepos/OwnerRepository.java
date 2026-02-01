@@ -22,5 +22,5 @@ public interface OwnerRepository extends JpaRepository<Owner, Long> {
     @org.springframework.data.jpa.repository.Query("SELECT o FROM Owner o WHERE o.status = :status")
     List<Owner> findByStatus(@org.springframework.data.repository.query.Param("status") OwnerStatus status);
 
-    java.util.Optional<Owner> findByUser_UserId(Long userId);
+    java.util.Optional<Owner> findByUser_Id(Long userId);
 }

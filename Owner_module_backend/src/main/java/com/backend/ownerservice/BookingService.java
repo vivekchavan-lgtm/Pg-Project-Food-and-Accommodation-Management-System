@@ -1,11 +1,18 @@
 package com.backend.ownerservice;
 
 import com.backend.dtos.BookingRequestDto;
+import com.backend.dtos.BookingResponseDto;
 import com.backend.ownerentity.Booking;
 import java.util.List;
 
 public interface BookingService {
-    Booking createBooking(BookingRequestDto request);
-    List<Booking> getBookingsForOwner(Long ownerId);
-    List<Booking> getBookingsForUser(Long userId);
+    BookingResponseDto createBooking(BookingRequestDto request);
+    
+    // Explicit lookup by User ID (for Dashboards logged in as User)
+    List<BookingResponseDto> getBookingsForOwnerByUserId(Long userId);
+
+    // Explicit lookup by Owner ID (for Admin or Public views)
+    List<BookingResponseDto> getBookingsForOwnerId(Long ownerId);
+
+    List<BookingResponseDto> getBookingsForUser(Long userId);
 }

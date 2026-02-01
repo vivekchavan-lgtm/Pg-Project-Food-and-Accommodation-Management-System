@@ -22,8 +22,7 @@ public class BookingController {
     @PostMapping
     public ResponseEntity<?> createBooking(@RequestBody BookingRequestDto request) {
         try {
-            Booking booking = bookingService.createBooking(request);
-            return ResponseEntity.ok(booking);
+            return ResponseEntity.ok(bookingService.createBooking(request));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
@@ -31,13 +30,28 @@ public class BookingController {
         }
     }
 
-    @GetMapping("/owner/{ownerId}")
-    public ResponseEntity<List<Booking>> getBookingsForOwner(@PathVariable Long ownerId) {
-        return ResponseEntity.ok(bookingService.getBookingsForOwner(ownerId));
+    // Note: The frontend sends the USER ID in this URL: /api/bookings/owner/{userId}
+    @GetMapping("/owner/{userId}")
+    public ResponseEntity<?> getBookingsForOwner(@PathVariable Long userId) {
+        System.out.println("DEBUG: Fetching bookings for Owner associated with UserId: " + userId);
+        try {
+            return ResponseEntity.ok(bookingService.getBookingsForOwnerByUserId(userId));
+        } catch (Exception e) {
+            System.err.println("CRITICAL ERROR in getBookingsForOwner: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body("Error fetching bookings: " + e.getMessage());
+        }
+    }
+
+    // New Endpoint for direct Owner ID lookup (optional but good for consistency)
+    @GetMapping("/owner-direct/{ownerId}")
+    public ResponseEntity<?> getBookingsByOwnerId(@PathVariable Long ownerId) {
+        System.out.println("DEBUG: Fetching bookings for OwnerId: " + ownerId);
+        return ResponseEntity.ok(bookingService.getBookingsForOwnerId(ownerId));
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Booking>> getBookingsForUser(@PathVariable Long userId) {
+    public ResponseEntity<?> getBookingsForUser(@PathVariable Long userId) {
         return ResponseEntity.ok(bookingService.getBookingsForUser(userId));
     }
 }

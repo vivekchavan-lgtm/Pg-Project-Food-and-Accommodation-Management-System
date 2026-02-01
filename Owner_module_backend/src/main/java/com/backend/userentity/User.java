@@ -49,5 +49,6 @@ public class User {
 
     // Owner link
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Owner owner;
 }

@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface MessOwnerRepository extends JpaRepository<MessOwner, Long> {
 
-    List<MessOwner> findByMessType(Enum messType);
+    List<MessOwner> findByMessType(com.backend.ownerentity.MessType messType);
 
-    java.util.Optional<MessOwner> findByUser_UserId(Long userId);
+    java.util.Optional<MessOwner> findByUser_Id(Long userId);
 }

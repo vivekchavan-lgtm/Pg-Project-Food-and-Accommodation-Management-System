@@ -11,10 +11,10 @@ import java.util.List;
 public interface PGOwnerRepository extends JpaRepository<PGOwner, Long> {
 
     // Example: find PGs by type
-    List<PGOwner> findByPgType(Enum pgType);
+    List<PGOwner> findByPgType(com.backend.ownerentity.PgType pgType);
 
     // Example: find PGs with minimum rooms
     List<PGOwner> findByTotalRoomsGreaterThan(int rooms);
 
-    java.util.Optional<PGOwner> findByUser_UserId(Long userId);
+    java.util.Optional<PGOwner> findByUser_Id(Long userId);
 }

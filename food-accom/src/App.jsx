@@ -76,8 +76,8 @@ export default function App() {
         <Route path="/user" element={<ProtectedRoute><UserLayout /></ProtectedRoute>}>
           <Route path="home" element={<UserHome />} />
           <Route path="search/:type" element={<SearchPage />} />
-          <Route path="pg/:id" element={<DetailsPage />} />
-          <Route path="mess/:id" element={<DetailsPage />} />
+          <Route path="pg/:id" element={<DetailsPage contentType="pg" />} />
+          <Route path="mess/:id" element={<DetailsPage contentType="mess" />} />
           <Route path="profile" element={<UserProfile />} />
         </Route>
 

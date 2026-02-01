@@ -55,11 +55,11 @@ public class RoomController {
         return ResponseEntity.ok(roomService.getRoomById(roomId));
     }
 
-    // Get all rooms of a PG owner
-    @GetMapping("/owner/{ownerId}")
-    public ResponseEntity<List<Room>> getRoomsByOwner(@PathVariable Long ownerId) {
-
-        return ResponseEntity.ok(roomService.getRoomsByOwner(ownerId));
+    // Get all rooms of a PG owner (Dashboard uses USER ID)
+    @GetMapping("/owner/{userId}")
+    public ResponseEntity<List<Room>> getRoomsByOwner(@PathVariable Long userId) {
+        System.out.println("DEBUG: Fetching Rooms for Owner associated with UserId: " + userId);
+        return ResponseEntity.ok(roomService.getRoomsByOwnerByUserId(userId));
     }
 
     // Get all available rooms

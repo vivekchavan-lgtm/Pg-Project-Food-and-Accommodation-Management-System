@@ -25,7 +25,7 @@ public class MessMenuServiceImpl implements MessMenuService {
     @Override
     public MessMenu addMenuItem(Long userId, MessMenu menu) {
         System.out.println("DEBUG: MessMenuServiceImpl.addMenuItem - Searching owner for userId: " + userId);
-        MessOwner messOwner = messOwnerRepository.findByUser_UserId(userId)
+        MessOwner messOwner = messOwnerRepository.findByUser_Id(userId)
                 .orElseThrow(() -> new RuntimeException("Mess Owner not found for userId: " + userId));
 
         System.out.println("DEBUG: MessMenuServiceImpl.addMenuItem - Found owner: " + messOwner.getEmail());
@@ -38,7 +38,6 @@ public class MessMenuServiceImpl implements MessMenuService {
 
     @Override
     public MessMenu updateMenuItem(Long menuId, MessMenu updatedMenu) {
-
         MessMenu existing = messMenuRepository.findById(menuId)
                 .orElseThrow(() -> new RuntimeException("Menu item not found"));
 
@@ -62,14 +61,20 @@ public class MessMenuServiceImpl implements MessMenuService {
     }
 
     @Override
-    public List<MessMenu> getMenuByOwner(Long userId) {
-        System.out.println("DEBUG: MessMenuServiceImpl.getMenuByOwner - userId: " + userId);
-        MessOwner messOwner = messOwnerRepository.findByUser_UserId(userId)
+    public List<MessMenu> getMenuByOwnerByUserId(Long userId) {
+        System.out.println("DEBUG: MessMenuServiceImpl.getMenuByOwnerByUserId - userId: " + userId);
+        MessOwner messOwner = messOwnerRepository.findByUser_Id(userId)
                 .orElseThrow(() -> new RuntimeException("Mess Owner not found for userId: " + userId));
         
         List<MessMenu> items = messMenuRepository.findByMessOwnerOwnerId(messOwner.getOwnerId());
-        System.out.println("DEBUG: MessMenuServiceImpl.getMenuByOwner - found " + items.size() + " items");
+        System.out.println("DEBUG: MessMenuServiceImpl.getMenuByOwnerByUserId - found " + items.size() + " items");
         return items;
+    }
+
+    @Override
+    public List<MessMenu> getMenuByOwnerId(Long ownerId) {
+        System.out.println("DEBUG: MessMenuServiceImpl.getMenuByOwnerId - ownerId: " + ownerId);
+        return messMenuRepository.findByMessOwnerOwnerId(ownerId);
     }
 
     @Override

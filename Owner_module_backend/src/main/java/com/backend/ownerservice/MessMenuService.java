@@ -14,7 +14,11 @@ public interface MessMenuService {
 
     MessMenu getMenuItemById(Long menuId);
 
-    List<MessMenu> getMenuByOwner(Long ownerId);
+    // Explicit lookup by User ID
+    List<MessMenu> getMenuByOwnerByUserId(Long userId);
+
+    // Explicit lookup by Owner ID
+    List<MessMenu> getMenuByOwnerId(Long ownerId);
 
     List<MessMenu> getAvailableMenuItems();
 

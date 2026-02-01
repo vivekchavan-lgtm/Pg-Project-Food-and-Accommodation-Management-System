@@ -14,7 +14,11 @@ public interface RoomService {
 
     Room getRoomById(Long roomId);
 
-    List<Room> getRoomsByOwner(Long ownerId);
+    // Explicit lookup by User ID
+    List<Room> getRoomsByOwnerByUserId(Long userId);
+
+    // Explicit lookup by Owner ID
+    List<Room> getRoomsByOwnerId(Long ownerId);
 
     List<Room> getAvailableRooms();
 

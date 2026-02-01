@@ -91,10 +91,12 @@ public class PublicListingController {
             response.put("owner", mapToDto(owner));
 
             if (owner.getOwnerType() == OwnerType.PG) {
-                List<Room> rooms = roomService.getRoomsByOwner(id);
+                // Use getRoomsByOwnerId since we have the ownerId directly
+                List<Room> rooms = roomService.getRoomsByOwnerId(id);
                 response.put("rooms", rooms);
             } else {
-                List<MessMenu> menu = menuService.getMenuByOwner(id);
+                // Use getMenuByOwnerId since we have the ownerId directly
+                List<MessMenu> menu = menuService.getMenuByOwnerId(id);
                 response.put("menu", menu);
             }
 

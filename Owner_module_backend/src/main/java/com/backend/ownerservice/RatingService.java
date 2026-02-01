@@ -43,13 +43,13 @@ public class RatingService {
     }
 
     public List<Rating> getOwnerRatings(Long userId) {
-        Owner owner = ownerRepository.findByUser_UserId(userId)
+        Owner owner = ownerRepository.findByUser_Id(userId)
                 .orElseThrow(() -> new RuntimeException("Owner not found for userId: " + userId));
         return ratingRepository.findByOwner_OwnerId(owner.getOwnerId());
     }
 
     public Double getAverageRating(Long userId) {
-        Owner owner = ownerRepository.findByUser_UserId(userId)
+        Owner owner = ownerRepository.findByUser_Id(userId)
                 .orElseThrow(() -> new RuntimeException("Owner not found for userId: " + userId));
         Double avg = ratingRepository.getAverageRating(owner.getOwnerId());
         return avg != null ? avg : 0.0;

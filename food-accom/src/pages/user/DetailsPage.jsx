@@ -1,10 +1,14 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
 const API_URL = "http://localhost:8080/api/public/listings";
 const BOOKING_API = "http://localhost:8080/api/bookings";
 
-export default function DetailsPage() {
-    const { type, id } = useParams();
+export default function DetailsPage({ contentType }) {
+    const { id } = useParams();
+    const type = contentType;
     const { user } = useAuth(); // Get logged in user
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
