@@ -1,1 +1,8 @@
 /.metadata/
+mysql_data/
+
+# Local Documentation
+DOCKER_INSTRUCTIONS.md
+AWS_DEPLOYMENT_GUIDE.md
+
+

@@ -1,44 +1,88 @@
 services:
-
+  # ---------------- DATABASE ----------------
   mysql:
     image: mysql:8.0
     container_name: food-mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: Tiger
-      MYSQL_DATABASE: Food_Acc_Management
     ports:
-      - "3306:3306"
+      # Exposing 3306 to host is optional for prod, but good for debugging tools
+      - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+      # Initialize multiple databases
+      - ./mysql-init:/docker-entrypoint-initdb.d
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - food_network
 
+  # ---------------- BACKEND: OWNER (SPRING BOOT) ----------------
   spring-backend:
     build: ./Owner_module_backend
+    image: food-owner-backend
     container_name: spring-backend
+    restart: always
     depends_on:
       mysql:
         condition: service_healthy
     environment:
-      DB_URL: jdbc:mysql://mysql:3306/Food_Acc_Management?useSSL=false&allowPublicKeyRetrieval=true
-      DB_USER: root
-      DB_PASSWORD: Tiger
+      # Spring Boot Config for Docker
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/Food_Acc_Management?allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Tiger
+      # Explicitly set port if needed, but 8080 is default
+      SERVER_PORT: 8080
     ports:
       - "8080:8080"
+    networks:
+      - food_network
 
+  # ---------------- BACKEND: ADMIN (.NET 8) ----------------
+  admin-service:
+    build: ./AdminService
+    image: food-admin-service
+    container_name: admin-service
+    restart: always
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      # .NET Config: Override ConnectionStrings__DefaultConnection
+      # Format: server=HOST;port=PORT;database=DB;user=USER;password=PASS;
+      ConnectionStrings__DefaultConnection: "server=mysql;port=3306;database=pg_admin;user=root;password=Tiger;"
+    ports:
+      - "8082:8080" # Map host 8082 to container 8080
+    networks:
+      - food_network
+
+  # ---------------- FRONTEND: FOOD ACCOM (REACT) ----------------
   frontend:
-    build: ./food-accom
-    container_name: frontend
+    build:
+      context: ./food-accom
+      args:
+        # CHANGE THIS TO YOUR EC2 PUBLIC IP IN PRODUCTION
+        - VITE_SPRING_API=${VITE_SPRING_API:-http://localhost:8080}
+        - VITE_ADMIN_API=${VITE_ADMIN_API:-http://localhost:8082}
+    image: food-frontend
+    container_name: food-frontend
+    restart: always
+    ports:
+      - "3000:80" # Map host 3000 to container 80. For Prod on AWS, change to "80:80"
     depends_on:
       - spring-backend
-    environment:
-      VITE_SPRING_API: http://spring-backend:8080
-    ports:
-      - "3000:80"
+      - admin-service
+    networks:
+      - food_network
 
 volumes:
   mysql_data:
+
+
+networks:
+  food_network:
+    driver: bridge
