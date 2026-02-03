@@ -25,6 +25,7 @@ import MessDashboard from "./pages/messOwner/MessDashboard";
 import OwnerDetails from "./pages/OwnerDetails";
 import OwnerProfile from "./pages/OwnerProfile";
 import MenuPage from "./pages/messOwner/MenuPage";
+import OwnerRatings from "./pages/OwnerRatings";
 
 
 
@@ -53,6 +54,9 @@ const OwnerRoute = ({ children }) => {
   return children;
 };
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function App() {
   return (
     <div
@@ -62,6 +66,7 @@ export default function App() {
         flexDirection: "column",
       }}
     >
+      <ToastContainer position="top-right" autoClose={3000} />
 
 
 
@@ -86,7 +91,7 @@ export default function App() {
           <Route path="dashboard" element={<PGDashboard />} />
           <Route path="profile" element={<OwnerProfile />} />
           <Route path="rooms" element={<RoomsPage />} />
-          <Route path="ratings" element={<div>View Ratings (Coming Soon)</div>} />
+          <Route path="ratings" element={<OwnerRatings />} />
         </Route>
 
         {/* Mess Owner Routes */}
@@ -94,7 +99,7 @@ export default function App() {
           <Route path="dashboard" element={<MessDashboard />} />
           <Route path="profile" element={<OwnerProfile />} />
           <Route path="menu" element={<MenuPage />} />
-          <Route path="ratings" element={<div>View Ratings (Coming Soon)</div>} />
+          <Route path="ratings" element={<OwnerRatings />} />
         </Route>
 
         {/* Admin Routes */}

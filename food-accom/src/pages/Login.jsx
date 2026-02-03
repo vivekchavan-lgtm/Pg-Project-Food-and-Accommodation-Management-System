@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useAuth } from "../contexts/AuthContext";
 import { loginUser } from "../services/authService";
 import styles from "./loginStyles";
@@ -20,6 +21,7 @@ export default function Login() {
       console.log("LOGIN RESPONSE:", res.data);
 
       login(res.data);
+      toast.success("Login Successful!");
 
       if (res.data.role === "ADMIN") {
         navigate("/admin/dashboard");
@@ -36,7 +38,7 @@ export default function Login() {
         navigate("/user/home");
       }
     } catch {
-      alert("Invalid credentials");
+      toast.error("Invalid credentials or server error");
     } finally {
       setLoading(false);
     }

@@ -4,6 +4,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import axios from 'axios';
 
 const API_URL = "http://localhost:8080/api/public/listings";
+console.log("SPRING API:", import.meta.env.VITE_SPRING_API);
 
 export default function UserHome() {
     const navigate = useNavigate();
@@ -32,13 +33,29 @@ export default function UserHome() {
                 <p style={heroSubStyle}>Discover the best PGs and Mess services near your college with verified listings and student reviews.</p>
                 <div style={heroActionStyle}>
                     <button
-                        style={primaryBtnStyle}
+                        style={actionBtnStyle}
+                        onMouseOver={(e) => {
+                            e.target.style.transform = 'translateY(-2px)';
+                            e.target.style.boxShadow = '0 6px 20px rgba(0,0,0,0.15)';
+                        }}
+                        onMouseOut={(e) => {
+                            e.target.style.transform = 'translateY(0)';
+                            e.target.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
+                        }}
                         onClick={() => navigate('/user/search/pg')}
                     >
                         Explore PGs
                     </button>
                     <button
-                        style={secondaryBtnStyle}
+                        style={actionBtnStyle}
+                        onMouseOver={(e) => {
+                            e.target.style.transform = 'translateY(-2px)';
+                            e.target.style.boxShadow = '0 6px 20px rgba(0,0,0,0.15)';
+                        }}
+                        onMouseOut={(e) => {
+                            e.target.style.transform = 'translateY(0)';
+                            e.target.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
+                        }}
                         onClick={() => navigate('/user/search/mess')}
                     >
                         Find Mess
@@ -92,21 +109,26 @@ export default function UserHome() {
                 </div>
             </div>
 
-            {/* Featured Section Placeholder */}
-            <div style={featuredSectionStyle}>
-                <h2 style={sectionTitleStyle}>Why Choose Us?</h2>
-                <div style={featureListStyle}>
-                    <div style={featureItemStyle}>
-                        <h4>Easy Comparison</h4>
-                        <p>Compare prices, amenities, and locations on a single page.</p>
+
+
+            {/* Contact Us Section */}
+            <div style={contactSectionStyle} id="contact">
+                <h2 style={sectionTitleStyle}>Contact Us</h2>
+                <div style={contactGridStyle}>
+                    <div style={contactCardStyle}>
+                        <span style={contactIconStyle}>📞</span>
+                        <h3 style={contactLabelStyle}>Call Us</h3>
+                        <p style={contactValueStyle}>+91 98765 43210</p>
                     </div>
-                    <div style={featureItemStyle}>
-                        <h4>Direct Contact</h4>
-                        <p>Connect with owners directly without any middleman fees.</p>
+                    <div style={contactCardStyle}>
+                        <span style={contactIconStyle}>📧</span>
+                        <h3 style={contactLabelStyle}>Email Us</h3>
+                        <p style={contactValueStyle}>support@pgmessfinder.com</p>
                     </div>
-                    <div style={featureItemStyle}>
-                        <h4>Smart Filters</h4>
-                        <p>Filter by Boys/Girls, Veg/Non-Veg, AC/Non-AC, and more.</p>
+                    <div style={contactCardStyle}>
+                        <span style={contactIconStyle}>📍</span>
+                        <h3 style={contactLabelStyle}>Visit Us</h3>
+                        <p style={contactValueStyle}>123, Tech Park, Pune, India</p>
                     </div>
                 </div>
             </div>
@@ -125,10 +147,11 @@ const containerStyle = {
 const heroStyle = {
     textAlign: 'center',
     padding: '80px 20px',
-    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', // Reverted to Brand Purple Gradient
     borderRadius: '24px',
     color: 'white',
-    marginBottom: '60px'
+    marginBottom: '60px',
+    boxShadow: '0 20px 40px rgba(118, 75, 162, 0.2)'
 };
 
 const heroTitleStyle = {
@@ -151,29 +174,17 @@ const heroActionStyle = {
     justifyContent: 'center'
 };
 
-const primaryBtnStyle = {
-    padding: '16px 32px',
-    fontSize: '18px',
+const actionBtnStyle = {
+    padding: '20px 40px',
+    fontSize: '20px',
     fontWeight: '700',
     borderRadius: '12px',
     border: 'none',
-    backgroundColor: '#fff',
-    color: '#764ba2',
+    backgroundColor: '#fff', // White background
+    color: '#764ba2', // Purple text
     cursor: 'pointer',
-    transition: 'transform 0.2s',
+    transition: 'all 0.2s',
     boxShadow: '0 4px 15px rgba(0,0,0,0.1)'
-};
-
-const secondaryBtnStyle = {
-    padding: '16px 32px',
-    fontSize: '18px',
-    fontWeight: '700',
-    borderRadius: '12px',
-    border: '2px solid rgba(255,255,255,0.4)',
-    backgroundColor: 'transparent',
-    color: 'white',
-    cursor: 'pointer',
-    transition: 'background 0.2s'
 };
 
 const infoGridStyle = {
@@ -270,4 +281,46 @@ const recentAddressStyle = {
     fontSize: '14px',
     color: '#64748b',
     margin: 0
+};
+
+
+
+const contactSectionStyle = {
+    textAlign: 'center',
+    marginBottom: '60px'
+};
+
+const contactGridStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    gap: '30px',
+    flexWrap: 'wrap'
+};
+
+const contactCardStyle = {
+    padding: '30px',
+    background: 'white',
+    borderRadius: '16px',
+    boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
+    minWidth: '250px',
+    border: '1px solid #f1f5f9'
+};
+
+const contactIconStyle = {
+    fontSize: '32px',
+    marginBottom: '15px',
+    display: 'block'
+};
+
+const contactLabelStyle = {
+    fontSize: '16px',
+    fontWeight: '700',
+    color: '#1e293b',
+    marginBottom: '5px'
+};
+
+const contactValueStyle = {
+    fontSize: '16px',
+    color: '#64748b',
+    fontWeight: '500'
 };

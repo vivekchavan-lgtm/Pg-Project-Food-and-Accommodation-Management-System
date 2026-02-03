@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { toast } from "react-toastify";
 import { useAuth } from '../../contexts/AuthContext';
 
 const API_URL = "http://localhost:8080/api/public/listings";
@@ -13,6 +14,8 @@ export default function DetailsPage({ contentType }) {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [bookingLoading, setBookingLoading] = useState(false);
+    const [reviews, setReviews] = useState([]);
+    const [reviewsLoading, setReviewsLoading] = useState(true);
 
     useEffect(() => {
         fetchDetails();
@@ -23,16 +26,31 @@ export default function DetailsPage({ contentType }) {
             setLoading(true);
             const res = await axios.get(`${API_URL}/${id}`);
             setData(res.data);
+            if (res.data?.owner?.ownerId) {
+                fetchReviews(res.data.owner.ownerId);
+            }
         } catch (err) {
             console.error("Failed to fetch details", err);
+            toast.error("Failed to load details");
         } finally {
             setLoading(false);
         }
     };
 
+    const fetchReviews = async (ownerId) => {
+        try {
+            const res = await axios.get(`http://localhost:8080/api/ratings/${ownerId}`);
+            setReviews(res.data);
+        } catch (err) {
+            console.error("Failed to fetch reviews", err);
+        } finally {
+            setReviewsLoading(false);
+        }
+    };
+
     const handleBooking = async () => {
         if (!user) {
-            alert("Please login to book!");
+            toast.warn("Please login to book!");
             return;
         }
 
@@ -45,10 +63,10 @@ export default function DetailsPage({ contentType }) {
                     message: "I am interested in your services."
                 };
                 await axios.post(BOOKING_API, payload);
-                alert("Booking request sent! The owner will contact you soon.");
+                toast.success("Booking request sent! The owner will contact you soon.");
             } catch (err) {
                 console.error("Booking failed", err);
-                alert(err.response?.data || "Failed to send booking request.");
+                toast.error(err.response?.data || "Failed to send booking request.");
             } finally {
                 setBookingLoading(false);
             }
@@ -120,6 +138,30 @@ export default function DetailsPage({ contentType }) {
                             </div>
                         </section>
                     )}
+
+
+                    {/* Reviews Section */}
+                    <section style={sectionStyle}>
+                        <h2 style={sectionTitleStyle}>Reviews & Ratings</h2>
+                        {reviewsLoading ? <p>Loading reviews...</p> : (
+                            reviews.length === 0 ? <p style={{ color: '#64748b' }}>No reviews yet. Be the first to rate!</p> : (
+                                <div style={{ display: 'grid', gap: '20px' }}>
+                                    {reviews.map(review => (
+                                        <div key={review.ratingId} style={{ ...itemCardStyle, background: '#fff' }}>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
+                                                <span style={{ fontWeight: 'bold', color: '#1e293b' }}>{review.userName}</span>
+                                                <span style={{ color: '#f5a623', fontWeight: 'bold' }}>{'★'.repeat(review.score)}</span>
+                                            </div>
+                                            <p style={{ margin: '5px 0', fontSize: '13px', color: '#94a3b8' }}>
+                                                {new Date(review.createdAt).toLocaleDateString()}
+                                            </p>
+                                            <p style={{ margin: 0, color: '#334155' }}>"{review.feedback}"</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            )
+                        )}
+                    </section>
                 </div>
 
                 {/* Sidebar / Contact */}
@@ -131,6 +173,7 @@ export default function DetailsPage({ contentType }) {
                             <p><strong>Owner:</strong> {owner.name}</p>
                             <p><strong>Phone:</strong> {owner.contactNo}</p>
                             <p><strong>Email:</strong> {owner.email}</p>
+                            <p><strong>Address:</strong> {owner.address}</p>
                         </div>
                         <button
                             style={{ ...bookBtnStyle, opacity: bookingLoading ? 0.7 : 1 }}
@@ -142,7 +185,7 @@ export default function DetailsPage({ contentType }) {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 

@@ -5,12 +5,13 @@ import { useAuth } from '../contexts/AuthContext';
 import Navbar from '../components/Navbar';
 import Rating from '../components/Rating';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export default function OwnerDetails() {
     const { id } = useParams();
     const navigate = useNavigate();
     const { user } = useAuth();
-
+    // ... (keep state same)
     const [owner, setOwner] = useState(null);
     const [ratings, setRatings] = useState([]);
     const [average, setAverage] = useState(0);
@@ -24,7 +25,7 @@ export default function OwnerDetails() {
     useEffect(() => {
         loadData();
     }, [id]);
-
+    // ...
     const loadData = async () => {
         try {
             setLoading(true);
@@ -52,14 +53,15 @@ export default function OwnerDetails() {
 
         } catch (err) {
             console.error("Error fetching owner details", err);
+            toast.error("Failed to load details");
         } finally {
             setLoading(false);
         }
     };
 
     const handleRate = async () => {
-        if (!user) return alert("Please login to rate");
-        if (userRating === 0) return alert("Select a star rating");
+        if (!user) return toast.warn("Please login to rate");
+        if (userRating === 0) return toast.warn("Select a star rating");
 
         try {
             await addRating({
@@ -68,12 +70,12 @@ export default function OwnerDetails() {
                 score: userRating,
                 feedback
             });
-            alert("Rating submitted!");
+            toast.success("Rating submitted!");
             setUserRating(0);
             setFeedback("");
             loadData(); // Reload to show new rating
         } catch (err) {
-            alert("Failed to submit rating");
+            toast.error("Failed to submit rating");
         }
     };
 

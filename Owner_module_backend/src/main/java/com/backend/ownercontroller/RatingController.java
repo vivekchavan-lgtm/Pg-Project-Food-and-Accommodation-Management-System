@@ -19,12 +19,13 @@ public class RatingController {
     }
 
     @PostMapping
-    public ResponseEntity<Rating> addRating(@RequestBody RatingRequest request) {
-        return ResponseEntity.ok(ratingService.addRating(request));
+    public ResponseEntity<String> addRating(@RequestBody RatingRequest request) {
+        ratingService.addRating(request);
+        return ResponseEntity.ok("Rating submitted successfully");
     }
 
     @GetMapping("/{ownerId}")
-    public ResponseEntity<List<Rating>> getRatings(@PathVariable Long ownerId) {
+    public ResponseEntity<List<com.backend.dtos.RatingResponseDto>> getRatings(@PathVariable Long ownerId) {
         return ResponseEntity.ok(ratingService.getOwnerRatings(ownerId));
     }
 

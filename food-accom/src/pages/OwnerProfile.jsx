@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const API_URL = "http://localhost:8080/api";
 
@@ -60,6 +61,7 @@ export default function OwnerProfile() {
             });
         } catch (err) {
             console.error("Failed to load profile", err);
+            toast.error("Failed to load profile data");
         } finally {
             setLoading(false);
         }
@@ -72,11 +74,11 @@ export default function OwnerProfile() {
         try {
             const isOwnerPG = owner.ownerType === 'PG';
             await axios.put(`${API_URL}/admin/owners/${user.userId}/profile`, form);
-            alert("Profile Updated Successfully!");
+            toast.success("Profile Updated Successfully!");
             navigate(isOwnerPG ? "/owner/pg/dashboard" : "/owner/mess/dashboard");
         } catch (err) {
             console.error("Update failed", err);
-            alert("Failed to update profile");
+            toast.error("Failed to update profile");
         }
     };
 

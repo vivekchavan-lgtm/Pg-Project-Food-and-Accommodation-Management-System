@@ -125,9 +125,6 @@ export default function SearchPage() {
                                 <h3 style={cardTitleStyle}>{type === 'pg' ? item.pgName : item.messName}</h3>
                                 <p style={addressStyle}>📍 {item.address}</p>
                                 <div style={cardFooterStyle}>
-                                    <span style={priceStyle}>
-                                        {type === 'pg' ? 'Starting from' : 'Meals from'}
-                                    </span>
                                     <button style={viewBtnStyle}>View Details</button>
                                 </div>
                             </div>
@@ -148,7 +145,13 @@ const containerStyle = {
 };
 
 const headerStyle = {
-    marginBottom: '40px'
+    marginBottom: '40px',
+    textAlign: 'center',
+    padding: '60px 20px',
+    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    borderRadius: '24px',
+    color: 'white',
+    boxShadow: '0 10px 30px rgba(118, 75, 162, 0.2)'
 };
 
 const filterBarStyle = {
@@ -159,7 +162,11 @@ const filterBarStyle = {
     padding: '20px',
     borderRadius: '16px',
     boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    marginTop: '-40px', // Overlap effect
+    marginLeft: '20px',
+    marginRight: '20px',
+    position: 'relative'
 };
 
 const searchInputStyle = {
@@ -246,16 +253,13 @@ const addressStyle = {
 
 const cardFooterStyle = {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
     borderTop: '1px solid #f1f5f9',
     paddingTop: '20px'
 };
 
-const priceStyle = {
-    fontSize: '14px',
-    color: '#64748b'
-};
+
 
 const viewBtnStyle = {
     background: '#764ba2',

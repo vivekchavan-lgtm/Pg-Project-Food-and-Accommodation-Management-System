@@ -5,7 +5,7 @@
 
 .pg-sidebar {
   width: 240px;
-  background: #1e293b;
+  background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
   color: white;
   padding: 30px 20px;
   display: flex;
@@ -38,14 +38,15 @@
 }
 
 .pg-sidebar a:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.2);
   color: white;
 }
 
 .pg-sidebar a.active {
-  background: #50e3c2;
-  color: white;
-  box-shadow: 0 4px 12px rgba(80, 227, 194, 0.3);
+  background: white;
+  color: #764ba2;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  font-weight: 700;
 }
 
 .pg-main {

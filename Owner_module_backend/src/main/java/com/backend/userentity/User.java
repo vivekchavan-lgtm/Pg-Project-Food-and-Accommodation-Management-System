@@ -45,6 +45,10 @@ public class User {
 
     @Column(nullable = false)
     private boolean enabled = true;
+
+    @org.hibernate.annotations.CreationTimestamp
+    @Column(updatable = false)
+    private java.time.LocalDateTime createdAt;
     
 
     // Owner link

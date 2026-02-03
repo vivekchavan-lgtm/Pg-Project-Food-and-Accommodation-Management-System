@@ -142,8 +142,39 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long id) {
-
         return userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    @Override
+    public User updateUser(Long id, User userDetails) {
+        User user = getUserById(id);
+        
+        if (userDetails.getFirstName() != null) user.setFirstName(userDetails.getFirstName());
+        if (userDetails.getLastName() != null) user.setLastName(userDetails.getLastName());
+        if (userDetails.getMobile() != null) user.setMobile(userDetails.getMobile());
+        if (userDetails.getCity() != null) user.setCity(userDetails.getCity());
+        if (userDetails.getGender() != null) user.setGender(userDetails.getGender());
+
+        // Update Owner details if linked
+        if (user.getOwner() != null) {
+            user.getOwner().setName(user.getFirstName() + " " + user.getLastName());
+            user.getOwner().setContactNo(user.getMobile());
+            user.getOwner().setAddress(user.getCity());
+        }
+
+        return userRepository.save(user);
+    }
+
+    @Override
+    public void changePassword(Long id, String oldPassword, String newPassword) {
+        User user = getUserById(id);
+
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+            throw new RuntimeException("Incorrect old password");
+        }
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
     }
 }

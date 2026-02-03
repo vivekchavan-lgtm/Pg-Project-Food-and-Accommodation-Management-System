@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 import { useAuth } from "../../contexts/AuthContext";
 
 const API_URL = "http://localhost:8080/api/mess/menu";
@@ -63,10 +64,10 @@ export default function MenuPage() {
             setShowModal(false);
             resetForm();
             fetchMenu();
-            alert(currentItem ? "Item updated!" : "Item added!");
+            toast.success(currentItem ? "Item updated!" : "Item added!");
         } catch (err) {
             console.error("DEBUG: MenuPage - Save failed", err);
-            alert("Error saving item. Please try again.");
+            toast.error("Error saving item. Please try again.");
         }
     };
 

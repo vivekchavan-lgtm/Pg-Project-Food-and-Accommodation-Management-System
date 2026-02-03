@@ -28,8 +28,10 @@ public class AdminController {
     @GetMapping("/stats")
     public ResponseEntity<Map<String, Object>> getStats() {
         Map<String, Object> stats = new HashMap<>();
-        stats.put("totalUsers", userRepository.count());
+        stats.put("totalUsers", userRepository.countByRole(com.backend.userentity.Role.USER));
         stats.put("totalOwners", ownerRepository.count());
+        stats.put("pgOwners", ownerRepository.findByOwnerType(com.backend.ownerentity.OwnerType.PG).size());
+        stats.put("messOwners", ownerRepository.findByOwnerType(com.backend.ownerentity.OwnerType.MESS).size());
         stats.put("pendingApprovals", ownerRepository.findByStatus(OwnerStatus.PENDING).size());
         stats.put("activeBookings", 0); // Placeholder
         return ResponseEntity.ok(stats);

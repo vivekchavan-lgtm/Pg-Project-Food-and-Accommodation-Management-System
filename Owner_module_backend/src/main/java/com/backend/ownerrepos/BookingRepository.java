@@ -17,4 +17,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     
     // Check if user already booked
     boolean existsByUser_IdAndOwner_OwnerId(Long userId, Long ownerId);
+
+    // Validate for Rating (Must exist and be ACCEPTED)
+    boolean existsByUser_IdAndOwner_OwnerIdAndStatus(Long userId, Long ownerId, com.backend.ownerentity.BookingStatus status);
 }

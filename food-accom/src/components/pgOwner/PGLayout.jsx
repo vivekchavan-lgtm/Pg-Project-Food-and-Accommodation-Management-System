@@ -13,7 +13,7 @@ export default function PGLayout() {
     <div className="pg-layout">
       {/* Sidebar */}
       <aside className="pg-sidebar">
-        <h2 style={{ color: '#50e3c2' }}>{displayName}</h2>
+        <h2 style={{ color: 'white' }}>{displayName}</h2>
         <div className="sidebar-links">
           <NavLink to="/owner/pg/dashboard" className={({ isActive }) => isActive ? "active" : ""}>Dashboard</NavLink>
           <NavLink to="/owner/pg/profile" className={({ isActive }) => isActive ? "active" : ""}>Profile</NavLink>

@@ -1,0 +1,44 @@
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: food-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Tiger
+      MYSQL_DATABASE: Food_Acc_Management
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  spring-backend:
+    build: ./Owner_module_backend
+    container_name: spring-backend
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/Food_Acc_Management?useSSL=false&allowPublicKeyRetrieval=true
+      DB_USER: root
+      DB_PASSWORD: Tiger
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build: ./food-accom
+    container_name: frontend
+    depends_on:
+      - spring-backend
+    environment:
+      VITE_SPRING_API: http://spring-backend:8080
+    ports:
+      - "3000:80"
+
+volumes:
+  mysql_data:

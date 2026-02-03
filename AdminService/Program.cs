@@ -12,15 +12,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// MySQL DbContext
+// MySQL DbContext (from ENV via appsettings.json)
+var conn = builder.Configuration.GetConnectionString("DefaultConnection");
+
 builder.Services.AddDbContext<AdminDbContext>(options =>
     options.UseMySql(
-        builder.Configuration.GetConnectionString("AdminDb"),
-        ServerVersion.AutoDetect(
-            builder.Configuration.GetConnectionString("AdminDb")
-        )
+        conn,
+        ServerVersion.AutoDetect(conn)
     )
 );
+
 
 // Register Admin service
 builder.Services.AddScoped<IAdminService, AdminService.Services.AdminService>();

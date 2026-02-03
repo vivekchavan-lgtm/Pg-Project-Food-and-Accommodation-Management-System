@@ -94,4 +94,19 @@ public class BookingServiceImpl implements BookingService {
         }
         return dto;
     }
+
+    @Override
+    public com.backend.dtos.BookingResponseDto updateBookingStatus(Long bookingId, String status) {
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new RuntimeException("Booking not found"));
+        
+        try {
+            BookingStatus newStatus = BookingStatus.valueOf(status.toUpperCase());
+            booking.setStatus(newStatus);
+            Booking saved = bookingRepository.save(booking);
+            return mapToDto(saved);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Invalid booking status: " + status);
+        }
+    }
 }

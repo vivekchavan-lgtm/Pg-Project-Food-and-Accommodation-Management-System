@@ -12,7 +12,7 @@ export default function MessLayout() {
         <div className="mess-layout">
             {/* Sidebar */}
             <aside className="mess-sidebar">
-                <h2 style={{ color: '#e056fd' }}>{displayName}</h2>
+                <h2 style={{ color: 'white' }}>{displayName}</h2>
                 <div className="sidebar-links">
                     <NavLink to="/owner/mess/dashboard" className={({ isActive }) => isActive ? "active" : ""}>Dashboard</NavLink>
                     <NavLink to="/owner/mess/profile" className={({ isActive }) => isActive ? "active" : ""}>Profile</NavLink>

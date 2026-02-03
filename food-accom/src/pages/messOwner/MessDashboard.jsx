@@ -63,6 +63,16 @@ export default function MessDashboard() {
         }
     };
 
+    const handleStatusUpdate = async (bookingId, status) => {
+        try {
+            await axios.put(`http://localhost:8080/api/bookings/${bookingId}/status?status=${status}`);
+            setBookings(prev => prev.map(b => b.bookingId === bookingId ? { ...b, status: status } : b));
+        } catch (err) {
+            console.error("Failed to update status", err);
+            alert("Failed to update status");
+        }
+    };
+
     return (
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <h1 style={{ marginBottom: "20px", color: "#333" }}>Mess Owner Dashboard</h1>
@@ -79,7 +89,11 @@ export default function MessDashboard() {
                 </div>
                 <div style={{ ...statBoxStyle, borderLeftColor: "#f5a623" }}>
                     <span style={statLabelStyle}>New Bookings</span>
-                    <span style={statValueStyle}>{bookings.length}</span>
+                    <span style={statValueStyle}>{bookings.filter(b => b.status === 'PENDING').length}</span>
+                </div>
+                <div style={{ ...statBoxStyle, borderLeftColor: "#10b981" }}>
+                    <span style={statLabelStyle}>Active Customers</span>
+                    <span style={statValueStyle}>{bookings.filter(b => b.status === 'ACCEPTED').length}</span>
                 </div>
                 <div style={{ ...statBoxStyle, borderLeftColor: "#2ecc71" }}>
                     <span style={statLabelStyle}>Reviews</span>
@@ -98,7 +112,7 @@ export default function MessDashboard() {
                     title="Manage Profile"
                     desc="Update Mess type, timings, and description"
                     onClick={() => navigate("/owner/mess/profile")}
-                    color="#4a90e2"
+                    color="#764ba2"
                     icon="👤"
                 />
                 <DashboardCard
@@ -126,14 +140,32 @@ export default function MessDashboard() {
                                     <p style={{ margin: 0, fontSize: '14px', background: '#f8fafc', padding: '8px', borderRadius: '4px' }}>
                                         "{booking.message}"
                                     </p>
-                                    <span style={{
-                                        display: 'inline-block', marginTop: '8px', fontSize: '11px', fontWeight: 'bold',
-                                        padding: '3px 8px', borderRadius: '12px',
-                                        background: booking.status === 'PENDING' ? '#fff7ed' : '#f0fdf4',
-                                        color: booking.status === 'PENDING' ? '#c2410c' : '#15803d'
-                                    }}>
-                                        {booking.status}
-                                    </span>
+
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
+                                        <span style={{
+                                            display: 'inline-block', fontSize: '11px', fontWeight: 'bold',
+                                            padding: '3px 8px', borderRadius: '12px',
+                                            background: booking.status === 'PENDING' ? '#fff7ed' : (booking.status === 'ACCEPTED' ? '#f0fdf4' : '#fef2f2'),
+                                            color: booking.status === 'PENDING' ? '#c2410c' : (booking.status === 'ACCEPTED' ? '#15803d' : '#991b1b')
+                                        }}>
+                                            {booking.status}
+                                        </span>
+
+                                        {booking.status === 'PENDING' && (
+                                            <div style={{ display: 'flex', gap: '8px' }}>
+                                                <button
+                                                    onClick={() => handleStatusUpdate(booking.bookingId, 'ACCEPTED')}
+                                                    style={{ ...actionBtnStyle, background: '#10b981', color: 'white' }}>
+                                                    Accept
+                                                </button>
+                                                <button
+                                                    onClick={() => handleStatusUpdate(booking.bookingId, 'REJECTED')}
+                                                    style={{ ...actionBtnStyle, background: '#ef4444', color: 'white' }}>
+                                                    Reject
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -148,7 +180,7 @@ export default function MessDashboard() {
                             {ratings.map(rating => (
                                 <div key={rating.ratingId} style={itemStyle}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                        <h4 style={{ margin: 0 }}>{rating.user.firstName}</h4>
+                                        <h4 style={{ margin: 0 }}>{rating.userName}</h4>
                                         <div style={{ color: '#f5a623' }}>{"⭐".repeat(rating.score)}</div>
                                     </div>
                                     <p style={{ margin: '8px 0 0', fontSize: '14px', color: '#444' }}>"{rating.feedback}"</p>
@@ -205,7 +237,7 @@ const statBoxStyle = {
     padding: "20px",
     borderRadius: "12px",
     boxShadow: "0 4px 10px rgba(0,0,0,0.05)",
-    borderLeft: "6px solid #4a90e2",
+    borderLeft: "6px solid #764ba2",
     display: "flex",
     flexDirection: "column",
     flex: 1,
@@ -263,4 +295,14 @@ const emptyStateStyle = {
     textAlign: 'center',
     padding: '30px',
     fontStyle: 'italic'
+};
+
+const actionBtnStyle = {
+    padding: '5px 10px',
+    borderRadius: '6px',
+    border: 'none',
+    fontSize: '11px',
+    fontWeight: '700',
+    cursor: 'pointer',
+    textTransform: 'uppercase'
 };

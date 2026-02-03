@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/bookings")
-@CrossOrigin(origins = "http://localhost:5173")
 public class BookingController {
 
     private final BookingService bookingService;
@@ -53,5 +52,14 @@ public class BookingController {
     @GetMapping("/user/{userId}")
     public ResponseEntity<?> getBookingsForUser(@PathVariable Long userId) {
         return ResponseEntity.ok(bookingService.getBookingsForUser(userId));
+    }
+
+    @PutMapping("/{bookingId}/status")
+    public ResponseEntity<?> updateBookingStatus(@PathVariable Long bookingId, @RequestParam String status) {
+        try {
+            return ResponseEntity.ok(bookingService.updateBookingStatus(bookingId, status));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 import { useAuth } from "../../contexts/AuthContext";
 
 const API_URL = "http://localhost:8080/api/rooms";
@@ -35,6 +36,7 @@ export default function RoomsPage() {
       setRooms(res.data);
     } catch (err) {
       console.error("DEBUG: RoomsPage - Fetch failed", err);
+      toast.error("Failed to load rooms");
     } finally {
       setLoading(false);
     }
@@ -64,10 +66,10 @@ export default function RoomsPage() {
       setShowModal(false);
       resetForm();
       fetchRooms();
-      alert(currentRoom ? "Room updated!" : "Room added!");
+      toast.success(currentRoom ? "Room updated!" : "Room added!");
     } catch (err) {
       console.error("DEBUG: RoomsPage - Save failed", err);
-      alert("Error saving room. Please try again.");
+      toast.error("Error saving room. Please try again.");
     }
   };
 

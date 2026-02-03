@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final UserService userService;
+    private final com.backend.config.JwtUtil jwtUtil;
 
-    public AuthController(UserService userService) {
+    public AuthController(UserService userService, com.backend.config.JwtUtil jwtUtil) {
         this.userService = userService;
+        this.jwtUtil = jwtUtil;
     }
 
     // ---------------- LOGIN ----------------
@@ -33,9 +35,18 @@ public class AuthController {
             response.setOwnerType(owner.getOwnerType().name());
         }
 
-        response.setToken("dummy-jwt-token");
+        // GENERATE REAL JWT
+        java.util.Map<String, Object> claims = new java.util.HashMap<>();
+        claims.put("role", user.getRole().name());
+        if (owner != null) {
+            claims.put("ownerType", owner.getOwnerType().name());
+        }
+        claims.put("userId", user.getId());
 
-        System.out.println("DEBUG: LoginResponse created for user: " + response.getName() + " with role: " + response.getRole());
+        String token = jwtUtil.generateToken(user.getEmail(), claims);
+        response.setToken(token);
+
+        System.out.println("DEBUG: Generated JWT for user: " + user.getEmail());
 
         return response;
     }

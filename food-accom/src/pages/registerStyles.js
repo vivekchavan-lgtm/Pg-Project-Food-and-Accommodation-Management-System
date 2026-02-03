@@ -4,8 +4,8 @@ const registerStyles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    background: "linear-gradient(135deg, #43cea2 0%, #185a9d 100%)",
-    padding: 20,
+    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", // Brand Gradient
+    padding: "20px",
   },
   card: {
     width: "100%",

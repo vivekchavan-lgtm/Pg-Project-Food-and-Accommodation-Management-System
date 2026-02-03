@@ -10,6 +10,8 @@ public interface OwnerService {
 
     Owner getOwnerById(Long ownerId);
 
+    Owner getOwnerByUserId(Long userId);
+
     List<Owner> getAllOwners();
 
     List<Owner> getOwnersByType(OwnerType ownerType);
