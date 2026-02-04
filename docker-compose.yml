@@ -65,14 +65,13 @@ services:
     build:
       context: ./food-accom
       args:
-        # Using relative paths so Nginx proxies them to the internal containers
-        - VITE_SPRING_API=/api/spring
-        - VITE_ADMIN_API=/api/admin
+        VITE_SPRING_API: /api/spring
+        VITE_ADMIN_API: /api/admin
     image: food-frontend
     container_name: food-frontend
     restart: always
     ports:
-      - "3000:80" # Map host 3000 to container 80. For Prod on AWS, change to "80:80"
+      - "80:80"
     depends_on:
       - spring-backend
       - admin-service
