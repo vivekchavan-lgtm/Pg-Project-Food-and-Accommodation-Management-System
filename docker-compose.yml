@@ -65,8 +65,8 @@ services:
     build:
       context: ./food-accom
       args:
-        VITE_SPRING_API: /api/spring
-        VITE_ADMIN_API: /api/admin
+        - VITE_SPRING_API=/api/spring
+        - VITE_ADMIN_API=/api/admin
     image: food-frontend
     container_name: food-frontend
     restart: always
