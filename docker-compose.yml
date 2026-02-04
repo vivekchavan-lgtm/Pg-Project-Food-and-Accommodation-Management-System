@@ -65,9 +65,9 @@ services:
     build:
       context: ./food-accom
       args:
-        # CHANGE THIS TO YOUR EC2 PUBLIC IP IN PRODUCTION
-        - VITE_SPRING_API=${VITE_SPRING_API:-http://localhost:8080}
-        - VITE_ADMIN_API=${VITE_ADMIN_API:-http://localhost:8082}
+        # Using relative paths so Nginx proxies them to the internal containers
+        - VITE_SPRING_API=/api/spring
+        - VITE_ADMIN_API=/api/admin
     image: food-frontend
     container_name: food-frontend
     restart: always
